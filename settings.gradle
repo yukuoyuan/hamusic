@@ -1,1 +1,1 @@
-include ':app', ':lib_audio', ':lib_video'
+include ':app', ':lib_audio', ':lib_video', ':lib_imageloader', ':lib_network', ':lib_share', ':lib_qrcode', ':lib_update', ':lib_webview'
