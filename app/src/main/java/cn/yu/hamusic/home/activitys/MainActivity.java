@@ -80,6 +80,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public final void initIndicator() {
         CommonNavigator commonNavigator = new CommonNavigator(this);
+        commonNavigator.setAdjustMode(true);
+
         CommonNavigatorAdapter commonNavigatorAdapter = new CommonNavigatorAdapter() {
             @Override
             public int getCount() {
@@ -137,6 +139,8 @@ public class MainActivity extends BaseActivity implements IMainView {
          * 设置指针
          */
         midMainIndicator.setNavigator(commonNavigator);
+        midMainIndicator.setBackgroundColor(Color.WHITE);
+
         /*
          * 绑定viewPager
          */
