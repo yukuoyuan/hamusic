@@ -11,6 +11,7 @@
         <item name="android:fitsSystemWindows">true</item>
         <!--允许activity的transition转场动画-->
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowBackground">@null</item>
     </style>
 
 </resources>
