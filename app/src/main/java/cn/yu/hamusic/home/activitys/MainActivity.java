@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import cn.yu.hamusic.home.beans.CHANNEL;
 import cn.yu.hamusic.home.iviews.IMainView;
 import cn.yu.lib_base.activitys.BaseActivity;
 import cn.yu.lib_common_ui.indicators.ScaleTransitionPagerTitleView;
+import okhttp3.Headers;
 
 
 /**

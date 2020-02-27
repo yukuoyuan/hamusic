@@ -34,4 +34,6 @@ dependencies {
     implementation project(':lib_base')
     // 引用通用的ui库
     implementation project(':lib_common_ui')
+    //网络库
+    implementation project(':lib_network')
 }

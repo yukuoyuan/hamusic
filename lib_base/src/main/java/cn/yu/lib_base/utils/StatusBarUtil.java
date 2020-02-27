@@ -95,7 +95,6 @@ public class StatusBarUtil {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-
             }
         }
         return result;
