@@ -25,7 +25,7 @@ public final class CommonRequest implements CommonRequestInterface {
     /**
      * json类型
      */
-    public final MediaType JSON_TYPE = MediaType.parse("application/json; charset=utf-8");
+    private final MediaType JSON_TYPE = MediaType.parse("application/json; charset=utf-8");
     /**
      * 当前类实例对象
      */
