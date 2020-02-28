@@ -31,5 +31,17 @@ public class HttpConstants {
      * 解析异常错误信息
      */
     public static final String JSON_ERROR_MSG = "";
+    /**
+     * 网络读取超时时间
+     */
+    public static final long READ_TIME_OUT = 30;
 
+    /**
+     * 网络连接超时时间
+     */
+    public static final long CONNECT_TIME_OUT = 30;
+    /**
+     * 网络写入超时时间
+     */
+    public static final long WRITE_TIME_OUT = 30;
 }
