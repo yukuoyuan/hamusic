@@ -1,4 +1,4 @@
-package cn.yu.lib_network;
+package cn.yu.lib_network.request;
 
 /**
  * Created on 2020-02-27

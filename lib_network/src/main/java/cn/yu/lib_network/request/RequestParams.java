@@ -1,4 +1,4 @@
-package cn.yu.lib_network;
+package cn.yu.lib_network.request;
 
 import java.util.HashMap;
 

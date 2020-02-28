@@ -22,5 +22,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation this.rootProject.depsLibs.appcompat
+    //引入okhttp
     api this.rootProject.depsLibs.okhttp
+    //引入解析控件google的gson
+    api this.rootProject.depsLibs.gson
 }
