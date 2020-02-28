@@ -3,6 +3,7 @@ package cn.yu.lib_network.request;
 import java.io.File;
 import java.util.Map;
 
+import cn.yu.lib_network.response.DisposeDataHandle;
 import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.MediaType;
@@ -212,6 +213,58 @@ public final class CommonRequest implements CommonRequestInterface {
         Request.Builder requestBuilder = new Request.Builder()
                 .url(requestParams.getUrl())
                 .headers(headersBuilder.build()).post(multipartBodyBuilder.build());
+        return requestBuilder.build();
+    }
+
+    @Override
+    public Request createMultipartRequest(RequestParams requestParams, DisposeDataHandle disposeDataHandle) {
+        /*
+         * 参数不可以为空
+         */
+        if (requestParams == null) {
+            return null;
+        }
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder();
+        /*
+         * 设置类型
+         */
+        multipartBodyBuilder.setType(MultipartBody.FORM);
+        if (requestParams.getFileParams() != null && !requestParams.getFileParams().isEmpty()) {
+            for (Map.Entry<String, Object> entry : requestParams.getFileParams().entrySet()) {
+                /*
+                 * 如果是一个文件
+                 */
+                if (entry.getValue() instanceof File) {
+                    multipartBodyBuilder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + entry.getKey() + "\""),
+                            RequestBody.create(FILE_TYPE, (File) entry.getValue()));
+                } else if (entry.getValue() instanceof String) {
+                    /*
+                     * 如果是字符串
+                     */
+                    multipartBodyBuilder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + entry.getKey() + "\""),
+                            RequestBody.create(null, (String) entry.getValue()));
+                }
+            }
+        }
+        /*
+         * 这是一个带回调的请求体
+         */
+        MultipartRequestBody multipartRequestBody = new MultipartRequestBody(multipartBodyBuilder.build(), disposeDataHandle);
+        /*
+         * 创建一个header,把头数据塞进去
+         */
+        Headers.Builder headersBuilder = new Headers.Builder();
+        if (requestParams.getHeaders() != null && !requestParams.getHeaders().isEmpty()) {
+            for (Map.Entry<String, String> entry : requestParams.getHeaders().entrySet()) {
+                headersBuilder.add(entry.getKey(), entry.getValue());
+            }
+        }
+        /*
+         * 构建一个request
+         */
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(requestParams.getUrl())
+                .headers(headersBuilder.build()).post(multipartRequestBody);
         return requestBuilder.build();
     }
 }

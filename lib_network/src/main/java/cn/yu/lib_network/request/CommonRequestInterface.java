@@ -1,5 +1,6 @@
 package cn.yu.lib_network.request;
 
+import cn.yu.lib_network.response.DisposeDataHandle;
 import okhttp3.Request;
 
 /**
@@ -49,4 +50,13 @@ public interface CommonRequestInterface {
      * @return request 一个请求
      */
     Request createMultipartRequest(RequestParams requestParams);
+
+    /**
+     * 创建一个文件上传请求,带回调
+     *
+     * @param requestParams     请求参数,包含body参数,head参数 url参数,请求方式
+     * @param disposeDataHandle 带回调的封装
+     * @return request 一个请求
+     */
+    Request createMultipartRequest(RequestParams requestParams, DisposeDataHandle disposeDataHandle);
 }

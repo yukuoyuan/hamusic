@@ -13,7 +13,7 @@ public class DisposeDataHandle {
     /**
      * 回调监听
      */
-    CommonResponseListener mCommonResponseListener;
+    public CommonResponseListener mCommonResponseListener;
     /**
      * 如果数据需要解析的话,传递
      */

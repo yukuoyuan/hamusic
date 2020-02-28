@@ -18,6 +18,7 @@ import okhttp3.OkHttpClient;
  * @link github https://github.com/yukuoyuan
  */
 public class CommonOkHttpClient {
+
     private static OkHttpClient mOkHttpClient;
 
     /*
