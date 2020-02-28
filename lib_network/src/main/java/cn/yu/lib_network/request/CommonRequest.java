@@ -1,5 +1,7 @@
 package cn.yu.lib_network.request;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.util.Map;
 
@@ -94,7 +96,12 @@ public final class CommonRequest implements CommonRequestInterface {
         /*
          * 创建一个表单,把数据塞进去
          */
-        RequestBody requestBody = RequestBody.create(JSON_TYPE, "");
+        RequestBody requestBody;
+        if (requestParams.getParams() != null) {
+            requestBody = RequestBody.create(JSON_TYPE, new Gson().toJson(requestParams.getParams()));
+        } else {
+            requestBody = RequestBody.create(JSON_TYPE, "");
+        }
         /*
          * 创建一个header,把头数据塞进去
          */
