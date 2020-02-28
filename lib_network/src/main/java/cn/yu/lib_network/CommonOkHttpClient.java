@@ -116,4 +116,15 @@ public class CommonOkHttpClient {
         Call uploadFileCall = mOkHttpClient.newCall(CommonRequest.getInstance().createMultipartRequest(requestParams));
         uploadFileCall.enqueue(new ResponseJsonCallBack(disposeDataHandle));
     }
+
+    /**
+     * 这是一个上传文件带进度的请求
+     *
+     * @param requestParams     请求参数
+     * @param disposeDataHandle 包含回调等的包装
+     */
+    public void uploadFileProgress(RequestParams requestParams, DisposeDataHandle disposeDataHandle) {
+        Call uploadFileCall = mOkHttpClient.newCall(CommonRequest.getInstance().createMultipartRequest(requestParams, disposeDataHandle));
+        uploadFileCall.enqueue(new ResponseJsonCallBack(disposeDataHandle));
+    }
 }
