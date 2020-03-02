@@ -44,14 +44,6 @@ public interface CommonRequestInterface {
     Request createRequest(RequestParams requestParams);
 
     /**
-     * 创建一个文件上传请求
-     *
-     * @param requestParams 请求参数,包含body参数,head参数 url参数,请求方式
-     * @return request 一个请求
-     */
-    Request createMultipartRequest(RequestParams requestParams);
-
-    /**
      * 创建一个文件上传请求,带回调
      *
      * @param requestParams     请求参数,包含body参数,head参数 url参数,请求方式

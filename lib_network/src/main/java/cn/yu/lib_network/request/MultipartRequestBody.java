@@ -18,6 +18,7 @@ import okio.Okio;
 
 /**
  * Created on 2020-02-28
+ * 这是一个用来封装上传进度的请求体
  *
  * @author yukuoyuan
  * @link github https://github.com/yukuoyuan
@@ -97,7 +98,6 @@ public class MultipartRequestBody extends RequestBody {
                  * 回调进度
                  */
                 mHandler.obtainMessage(PROGRESS_MESSAGE, progress).sendToTarget();
-
             }
         };
         //转一下

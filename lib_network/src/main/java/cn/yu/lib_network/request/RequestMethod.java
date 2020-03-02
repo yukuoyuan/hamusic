@@ -8,5 +8,8 @@ package cn.yu.lib_network.request;
  * @link github https://github.com/yukuoyuan
  */
 public enum RequestMethod {
-    POST, GET,
+    /**
+     *
+     */
+    POSTJSON, POSTFORM, GET,
 }
