@@ -19,7 +19,9 @@ ext {
             butterknifecompiler: '8.8.1',
             magicindicator     : '1.5.0',
             okhttp             : '3.3.0',
-            gson               : '2.8.0'
+            gson               : '2.8.0',
+            glide              : '4.9.0',
+            glidecompiler      : '4.9.0'
     ]
     //定义一些依赖包
     depsLibs = [
@@ -29,6 +31,8 @@ ext {
             butterknifecompiler: "com.jakewharton:butterknife-compiler:${depsVersion.butterknife}",
             magicindicator     : "com.github.hackware1993:MagicIndicator:${depsVersion.magicindicator}",
             okhttp             : "com.squareup.okhttp3:okhttp:${depsVersion.okhttp}",
-            gson               : "com.google.code.gson:gson:${depsVersion.gson}"
+            gson               : "com.google.code.gson:gson:${depsVersion.gson}",
+            glide              : "com.github.bumptech.glide:glide:${depsVersion.glide}",
+            glidecompiler      : "com.github.bumptech.glide:compiler:${depsVersion.glidecompiler}"
     ]
 }

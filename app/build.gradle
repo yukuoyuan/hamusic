@@ -36,4 +36,6 @@ dependencies {
     implementation project(':lib_common_ui')
     //网络库
     implementation project(':lib_network')
+    //图片加载库
+    implementation project(':lib_imageloader')
 }
