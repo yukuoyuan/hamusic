@@ -261,7 +261,10 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-
+        /*
+         * 发送事件
+         */
+        postEvent(AudioEvent.AudioEventStatus.COMPLETE);
     }
 
     @Override
@@ -281,7 +284,14 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
-        return false;
+        /*
+         * 发送事件
+         */
+        postEvent(AudioEvent.AudioEventStatus.ERROR);
+        /*
+         * return true 是自行处理,不需要播放器处理,并且不会回调comple回调
+         */
+        return true;
     }
 
 

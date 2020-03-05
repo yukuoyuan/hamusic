@@ -15,6 +15,7 @@ public class AudioEvent {
         LOAD,
         START,
         PAUSE,
+        COMPLETE,
         RELEASE,
         ERROR
     }
