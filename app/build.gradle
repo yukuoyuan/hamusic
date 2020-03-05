@@ -30,6 +30,11 @@ dependencies {
     implementation this.rootProject.depsLibs.appcompat
     implementation this.rootProject.depsLibs.constraintlayout
     annotationProcessor this.rootProject.depsLibs.butterknifecompiler
+    //占位主工程的数据库greendao
+    implementation this.rootProject.depsLibs.greendao
+    //占位主工程的eventbus库
+    implementation this.rootProject.depsLibs.eventbus
+
     //引用基础库
     implementation project(':lib_base')
     // 引用通用的ui库

@@ -28,6 +28,8 @@ greendao {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation this.rootProject.depsLibs.appcompat
-    //引入数据库greendao
-    implementation this.rootProject.depsLibs.greendao
+    //占位主工程的数据库greendao
+    compileOnly this.rootProject.depsLibs.greendao
+    //占位主工程的eventbus库
+    compileOnly this.rootProject.depsLibs.eventbus
 }

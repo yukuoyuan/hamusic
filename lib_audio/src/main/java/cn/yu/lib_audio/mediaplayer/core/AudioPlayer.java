@@ -8,7 +8,10 @@ import android.os.PowerManager;
 import android.util.Log;
 
 
+import org.greenrobot.eventbus.EventBus;
+
 import cn.yu.lib_audio.AudioHelper;
+import cn.yu.lib_audio.events.AudioEvent;
 
 /**
  * Created on 2020-03-05
@@ -121,6 +124,19 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
          * 锁定无线网,不被关闭
          */
         mWifiLock.acquire();
+        /*
+         * 发送事件
+         */
+        postEvent(AudioEvent.AudioEventStatus.START);
+    }
+
+    /**
+     * 发送各种事件
+     *
+     * @param status 状态
+     */
+    private void postEvent(AudioEvent.AudioEventStatus status) {
+        EventBus.getDefault().post(new AudioEvent(status));
     }
 
     /**
@@ -130,6 +146,10 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         try {
             if (mCustomMediaPlayer != null) {
                 /*
+                 * 清空之前的所有数据
+                 */
+                mCustomMediaPlayer.reset();
+                /*
                  * 设置播放源
                  */
                 mCustomMediaPlayer.setDataSource("");
@@ -137,9 +157,17 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                  * 异步进行缓冲准备
                  */
                 mCustomMediaPlayer.prepareAsync();
+                /*
+                 * 发送事件
+                 */
+                postEvent(AudioEvent.AudioEventStatus.LOAD);
             }
         } catch (Exception e) {
             e.printStackTrace();
+            /*
+             * 发送事件
+             */
+            postEvent(AudioEvent.AudioEventStatus.ERROR);
         }
 
     }
@@ -165,8 +193,11 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
             if (mAudioFocusManager != null) {
                 mAudioFocusManager.abandonAudioFocus();
             }
+            /*
+             * 发送事件
+             */
+            postEvent(AudioEvent.AudioEventStatus.PAUSE);
         }
-
     }
 
     /**
@@ -206,7 +237,10 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
             mAudioFocusManager.abandonAudioFocus();
             mAudioFocusManager = null;
         }
-
+        /*
+         * 发送事件
+         */
+        postEvent(AudioEvent.AudioEventStatus.RELEASE);
     }
 
     /**

@@ -22,7 +22,8 @@ ext {
             gson               : '2.8.0',
             glide              : '4.9.0',
             glidecompiler      : '4.9.0',
-            greendao           : '3.2.2'
+            greendao           : '3.2.2',
+            eventbus           : '3.1.1'
     ]
     //定义一些依赖包
     depsLibs = [
@@ -35,6 +36,7 @@ ext {
             gson               : "com.google.code.gson:gson:${depsVersion.gson}",
             glide              : "com.github.bumptech.glide:glide:${depsVersion.glide}",
             glidecompiler      : "com.github.bumptech.glide:compiler:${depsVersion.glidecompiler}",
-            greendao           : "org.greenrobot:greendao:${depsVersion.greendao}"
+            greendao           : "org.greenrobot:greendao:${depsVersion.greendao}",
+            eventbus           : "org.greenrobot:eventbus:${depsVersion.eventbus}"
     ]
 }
