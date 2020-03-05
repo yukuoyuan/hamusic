@@ -21,7 +21,8 @@ ext {
             okhttp             : '3.3.0',
             gson               : '2.8.0',
             glide              : '4.9.0',
-            glidecompiler      : '4.9.0'
+            glidecompiler      : '4.9.0',
+            greendao           : '3.2.2'
     ]
     //定义一些依赖包
     depsLibs = [
@@ -33,6 +34,7 @@ ext {
             okhttp             : "com.squareup.okhttp3:okhttp:${depsVersion.okhttp}",
             gson               : "com.google.code.gson:gson:${depsVersion.gson}",
             glide              : "com.github.bumptech.glide:glide:${depsVersion.glide}",
-            glidecompiler      : "com.github.bumptech.glide:compiler:${depsVersion.glidecompiler}"
+            glidecompiler      : "com.github.bumptech.glide:compiler:${depsVersion.glidecompiler}",
+            greendao           : "org.greenrobot:greendao:${depsVersion.greendao}"
     ]
 }

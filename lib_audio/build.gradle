@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion this.rootProject.android.compileSdkVersion
@@ -18,9 +19,15 @@ android {
     }
 
 }
-
+greendao {
+    //数据库版本号
+    schemaVersion 1
+    //生成的文件在哪个包名下
+    daoPackage "cn.yu.lib_audio_mediaplayer.db"
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation this.rootProject.depsLibs.appcompat
-
+    //引入数据库greendao
+    implementation this.rootProject.depsLibs.greendao
 }
