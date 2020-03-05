@@ -1,18 +1,16 @@
 apply plugin: 'com.android.library'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
-
+    compileSdkVersion this.rootProject.android.compileSdkVersion
+    buildToolsVersion this.rootProject.android.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        consumerProguardFiles 'consumer-rules.pro'
+        minSdkVersion this.rootProject.android.minSdkVersion
+        targetSdkVersion this.rootProject.android.targetSdkVersion
+        versionCode this.rootProject.android.versionCode
+        versionName this.rootProject.android.versionName
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -21,9 +19,17 @@ android {
     }
 
 }
-
+greendao {
+    //数据库版本号
+    schemaVersion 1
+    //生成的文件在哪个包名下
+    daoPackage "cn.yu.lib_audio_mediaplayer.db"
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-
+    implementation this.rootProject.depsLibs.appcompat
+    //占位主工程的数据库greendao
+    compileOnly this.rootProject.depsLibs.greendao
+    //占位主工程的eventbus库
+    compileOnly this.rootProject.depsLibs.eventbus
 }
