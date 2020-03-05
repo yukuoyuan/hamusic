@@ -11,6 +11,7 @@ import android.util.Log;
 import org.greenrobot.eventbus.EventBus;
 
 import cn.yu.lib_audio.AudioHelper;
+import cn.yu.lib_audio.bean.AudioBean;
 import cn.yu.lib_audio.events.AudioEvent;
 
 /**
@@ -142,7 +143,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
     /**
      * 加载资源并播放
      */
-    public void load() {
+    public void load(AudioBean audioBean) {
         try {
             if (mCustomMediaPlayer != null) {
                 /*
@@ -152,7 +153,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 /*
                  * 设置播放源
                  */
-                mCustomMediaPlayer.setDataSource("");
+                mCustomMediaPlayer.setDataSource(audioBean.pathUrl);
                 /*
                  * 异步进行缓冲准备
                  */

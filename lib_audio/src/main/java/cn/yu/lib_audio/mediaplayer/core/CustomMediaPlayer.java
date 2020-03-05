@@ -12,17 +12,33 @@ import java.io.IOException;
  * @link github https://github.com/yukuoyuan
  */
 public class CustomMediaPlayer extends MediaPlayer implements MediaPlayer.OnCompletionListener {
-
+    /**
+     * 各种播放的状态
+     */
     public enum Status {
         /**
-         * 各种播放的状态
-         * 无状态,初始化状态,开始状态,暂停状态,停止状态,播放结束状态
+         * 无状态
          */
         IDLE,
+        /**
+         * 初始化
+         */
         INITIALIZED,
+        /**
+         * 开始
+         */
         START,
+        /**
+         * 暂停
+         */
         PAUSE,
+        /**
+         * 停止
+         */
         STOP,
+        /**
+         * 播放完毕
+         */
         COMPLETE,
     }
 

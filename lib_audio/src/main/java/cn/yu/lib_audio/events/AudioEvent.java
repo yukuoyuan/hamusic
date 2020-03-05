@@ -8,15 +8,33 @@ package cn.yu.lib_audio.events;
  * @link github https://github.com/yukuoyuan
  */
 public class AudioEvent {
+    /**
+     * 各种状态
+     */
     public enum AudioEventStatus {
-        /*
-         * 各种状态
+        /**
+         * 加载
          */
         LOAD,
+        /**
+         * 开始
+         */
         START,
+        /**
+         * 暂停
+         */
         PAUSE,
+        /**
+         * 播放完成
+         */
         COMPLETE,
+        /**
+         * 释放
+         */
         RELEASE,
+        /**
+         * 播放错误
+         */
         ERROR
     }
 
