@@ -1,6 +1,8 @@
 package cn.yu.lib_audio.events;
 
 
+import cn.yu.lib_audio.bean.AudioBean;
+
 /**
  * Created on 2020-03-05
  *
@@ -42,12 +44,31 @@ public class AudioEvent {
      * 播放器状态
      */
     private AudioEventStatus status;
+    /**
+     * 播放数据
+     */
+    private AudioBean audioBean;
 
-    public AudioEvent(AudioEventStatus status) {
+    public AudioEvent(AudioEventStatus status, AudioBean audioBean) {
         this.status = status;
+        this.audioBean = audioBean;
     }
 
+    /**
+     * 事件状态
+     *
+     * @return 状态
+     */
     public AudioEventStatus getStatus() {
         return status;
+    }
+
+    /**
+     * 获取数据
+     *
+     * @return 数据
+     */
+    public AudioBean getAudioBean() {
+        return audioBean;
     }
 }

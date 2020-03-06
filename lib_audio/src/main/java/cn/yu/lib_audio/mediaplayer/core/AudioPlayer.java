@@ -128,16 +128,17 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         /*
          * 发送事件
          */
-        postEvent(AudioEvent.AudioEventStatus.START);
+        postEvent(AudioEvent.AudioEventStatus.START, null);
     }
 
     /**
      * 发送各种事件
      *
-     * @param status 状态
+     * @param status    状态
+     * @param audioBean 数据
      */
-    private void postEvent(AudioEvent.AudioEventStatus status) {
-        EventBus.getDefault().post(new AudioEvent(status));
+    private void postEvent(AudioEvent.AudioEventStatus status, AudioBean audioBean) {
+        EventBus.getDefault().post(new AudioEvent(status, audioBean));
     }
 
     /**
@@ -161,14 +162,14 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 /*
                  * 发送事件
                  */
-                postEvent(AudioEvent.AudioEventStatus.LOAD);
+                postEvent(AudioEvent.AudioEventStatus.LOAD, audioBean);
             }
         } catch (Exception e) {
             e.printStackTrace();
             /*
              * 发送事件
              */
-            postEvent(AudioEvent.AudioEventStatus.ERROR);
+            postEvent(AudioEvent.AudioEventStatus.ERROR, null);
         }
 
     }
@@ -197,7 +198,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
             /*
              * 发送事件
              */
-            postEvent(AudioEvent.AudioEventStatus.PAUSE);
+            postEvent(AudioEvent.AudioEventStatus.PAUSE, null);
         }
     }
 
@@ -241,7 +242,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         /*
          * 发送事件
          */
-        postEvent(AudioEvent.AudioEventStatus.RELEASE);
+        postEvent(AudioEvent.AudioEventStatus.RELEASE, null);
     }
 
     /**
@@ -265,7 +266,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         /*
          * 发送事件
          */
-        postEvent(AudioEvent.AudioEventStatus.COMPLETE);
+        postEvent(AudioEvent.AudioEventStatus.COMPLETE, null);
     }
 
     @Override
@@ -288,7 +289,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         /*
          * 发送事件
          */
-        postEvent(AudioEvent.AudioEventStatus.ERROR);
+        postEvent(AudioEvent.AudioEventStatus.ERROR, null);
         /*
          * return true 是自行处理,不需要播放器处理,并且不会回调comple回调
          */
