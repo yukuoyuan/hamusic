@@ -16,10 +16,12 @@ import org.greenrobot.eventbus.ThreadMode;
 import cn.yu.lib_audio.R;
 import cn.yu.lib_audio.bean.AudioBean;
 import cn.yu.lib_audio.events.AudioEvent;
+import cn.yu.lib_imageloader.ImageLoadManger;
 
 
 /**
  * Created on 2020-03-06
+ * 这是一个自定义的底部的控件
  *
  * @author yukuoyuan
  * @link github https://github.com/yukuoyuan
@@ -56,10 +58,21 @@ public class BottomMusicView extends ConstraintLayout {
          */
         initView();
         /*
+         * 初始化点击事件等
+         */
+        initListener();
+        /*
          * 开启圆形banner的旋转动画
          */
         startBannerRotationAnimation();
 
+    }
+
+    /**
+     * 设置点击事件
+     */
+    private void initListener() {
+//        ivDiyViewBottomMusicViewList.setOnClickListener(this);
     }
 
     /**
@@ -91,6 +104,9 @@ public class BottomMusicView extends ConstraintLayout {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onAudioEvent(AudioEvent audioEvent) {
         switch (audioEvent.getStatus()) {
+            case PAUSE:
+                showPlayView();
+                break;
             case LOAD:
                 /*
                  * 开始加载的时候
@@ -108,11 +124,22 @@ public class BottomMusicView extends ConstraintLayout {
      * @param audioBean 数据
      */
     private void initData2View(AudioBean audioBean) {
-
+        /*
+         * banner
+         */
+        ImageLoadManger.getInstance().loadCircleImage2ImageView(ivDiyViewBottomMusicViewBanner, audioBean.albumPic);
+        /*
+         * 名字
+         */
+        tvDiyViewBottomMusicViewTitle.setText(audioBean.authorName);
+        /*
+         * 专辑名字
+         */
+        tvDiyViewBottomMusicViewDesc.setText(audioBean.albumName);
         /*
          * 展示播放状态
          */
-        showPlayView();
+        showPauseView();
     }
 
     /**
