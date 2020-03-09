@@ -20,7 +20,6 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:src="@drawable/icon_diy_view_bottom_music_view_list"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

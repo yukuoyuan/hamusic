@@ -16,6 +16,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import cn.yu.lib_audio.R;
 import cn.yu.lib_audio.bean.AudioBean;
 import cn.yu.lib_audio.events.AudioEvent;
+import cn.yu.lib_audio.mediaplayer.control.AudioController;
 import cn.yu.lib_imageloader.ImageLoadManger;
 
 
@@ -26,7 +27,7 @@ import cn.yu.lib_imageloader.ImageLoadManger;
  * @author yukuoyuan
  * @link github https://github.com/yukuoyuan
  */
-public class BottomMusicView extends ConstraintLayout {
+public class BottomMusicView extends ConstraintLayout implements View.OnClickListener {
 
     private ImageView ivDiyViewBottomMusicViewBanner;
     private TextView tvDiyViewBottomMusicViewTitle;
@@ -72,7 +73,8 @@ public class BottomMusicView extends ConstraintLayout {
      * 设置点击事件
      */
     private void initListener() {
-//        ivDiyViewBottomMusicViewList.setOnClickListener(this);
+        ivDiyViewBottomMusicViewList.setOnClickListener(this);
+        ivDiyViewBottomMusicViewIsPlay.setOnClickListener(this);
     }
 
     /**
@@ -154,6 +156,22 @@ public class BottomMusicView extends ConstraintLayout {
     }
 
     /**
+     * 播放或者暂停
+     */
+    private void playOrPause() {
+        AudioController.getInstance().playOrPause();
+    }
+
+    /**
+     * 展示加载中的状态
+     */
+    public void showLoadingView() {
+        if (ivDiyViewBottomMusicViewIsPlay != null) {
+            ivDiyViewBottomMusicViewIsPlay.setImageResource(R.drawable.icon_diy_view_bottom_music_view_play);
+        }
+    }
+
+    /**
      * 展示播放的状态
      */
     public void showPlayView() {
@@ -171,4 +189,56 @@ public class BottomMusicView extends ConstraintLayout {
         }
     }
 
+    /**
+     * view销毁的时候
+     */
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onAudioStatusChangeEvent(AudioEvent event) {
+        /*
+         * 播放状态
+         */
+        switch (event.getStatus()) {
+            case LOAD:
+                showLoadingView();
+                break;
+            case ERROR:
+                break;
+            case PAUSE:
+                showPauseView();
+                break;
+            case START:
+                showPlayView();
+                break;
+            case COMPLETE:
+                /*
+                 * 下一首
+                 */
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        if (id == R.id.iv_diy_view_bottom_music_view_is_play) {
+            /*
+             * 播放或者暂停
+             */
+            playOrPause();
+        } else if (id == R.id.iv_diy_view_bottom_music_view_list) {
+            /*
+             * 弹出播放列表
+             */
+
+        }
+    }
 }
