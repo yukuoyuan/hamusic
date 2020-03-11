@@ -81,6 +81,15 @@ public class AudioController {
     /**
      * 获取现在正在播放的数据bean
      *
+     * @return 数据bean
+     */
+    public AudioBean getNowPlaying() {
+        return getNowPlaying(mQueueIndex);
+    }
+
+    /**
+     * 获取现在正在播放的数据bean
+     *
      * @param queueIndex 索引
      * @return 数据bean
      */

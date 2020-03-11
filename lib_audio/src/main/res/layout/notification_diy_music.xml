@@ -71,6 +71,7 @@
             android:src="@drawable/icon_notification_previous" />
 
         <ImageView
+            android:id="@+id/iv_diy_view_bottom_music_play_pause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -78,6 +79,7 @@
             android:src="@drawable/icon_diy_view_bottom_music_view_play" />
 
         <ImageView
+            android:id="@+id/iv_diy_view_bottom_music_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
