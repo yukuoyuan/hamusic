@@ -9,13 +9,11 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
-import org.greenrobot.eventbus.EventBus;
 
 import cn.yu.lib_audio.AudioHelper;
 import cn.yu.lib_audio.R;
 import cn.yu.lib_audio.activitys.MusicPlayerActivity;
 import cn.yu.lib_audio.bean.AudioBean;
-import cn.yu.lib_audio.mediaplayer.control.AudioController;
 import cn.yu.lib_audio.receivers.NotificationReceiver;
 
 /**
@@ -35,21 +33,26 @@ public class NotificationHelper {
      */
     private static final String CHANNEL_NAME = "channel_id_name";
     /**
+     * 通知id,保持唯一,因为就这一个通知
+     */
+    private static final int NOTIFICATION_ID = 0x111;
+
+    /**
      * 当前对象
      */
     private static NotificationHelper mNotificationHelper = null;
     /**
      * 点击下一曲的请求码
      */
-    private static final int nextPendingIntentRequestCode = 1;
+    private static final int NEXT_PENDING_INTENT_REQUEST_CODE = 1;
     /**
      * 点击上一曲的请求码
      */
-    private static final int previousPendingIntentRequestCode = 2;
+    private static final int PREVIOUS_PENDINGINTENT_REQUEST_CODE = 2;
     /**
      * 点击播放暂停的请求码
      */
-    private static final int playOrPausePendingIntentRequestCode = 3;
+    private static final int PLAY_OR_PAUSE_PENDING_INTENT_REQUEST_CODE = 3;
     /**
      * 通知
      */
@@ -86,10 +89,6 @@ public class NotificationHelper {
          * 获得通知管理类
          */
         mNotificationManager = (NotificationManager) AudioHelper.getInstance().getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        /*
-         *获取当前播放的数据
-         */
-        mAudioBean = AudioController.getInstance().getNowPlaying();
         /*
          * 初始化通知
          */
@@ -149,23 +148,11 @@ public class NotificationHelper {
         int layoutId = R.layout.notification_diy_music;
         mRemoteViews = new RemoteViews(AudioHelper.getInstance().getContext().getPackageName(), layoutId);
         /*
-         * 歌曲名称
-         */
-        mRemoteViews.setTextViewText(R.id.tv_diy_view_bottom_music_view_title, mAudioBean.musicName);
-        /*
-         * 专辑名称
-         */
-        mRemoteViews.setTextViewText(R.id.tv_notification_diy_music_author_name, mAudioBean.albumName);
-        /*
-         * 是否收藏
-         */
-        mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_is_favourite, R.drawable.icon_favourite);
-        /*
          * 点击上一曲
          */
         Intent nexIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
         nexIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
-        PendingIntent nextPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), nextPendingIntentRequestCode, nexIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent nextPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), NEXT_PENDING_INTENT_REQUEST_CODE, nexIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mRemoteViews.setOnClickPendingIntent(R.id.iv_diy_view_bottom_music_next, nextPendingIntent);
 
 
@@ -174,7 +161,7 @@ public class NotificationHelper {
          */
         Intent previousIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
         previousIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
-        PendingIntent previousPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), previousPendingIntentRequestCode, previousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent previousPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PREVIOUS_PENDINGINTENT_REQUEST_CODE, previousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mRemoteViews.setOnClickPendingIntent(R.id.iv_diy_view_bottom_music_previous, previousPendingIntent);
 
 
@@ -183,9 +170,58 @@ public class NotificationHelper {
          */
         Intent playOrPauseIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
         playOrPauseIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
-        PendingIntent playOrPausePendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), previousPendingIntentRequestCode, playOrPauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent playOrPausePendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PLAY_OR_PAUSE_PENDING_INTENT_REQUEST_CODE, playOrPauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mRemoteViews.setOnClickPendingIntent(R.id.iv_diy_view_bottom_music_play_pause, playOrPausePendingIntent);
+    }
 
+    /**
+     * 展示播放的状态
+     */
+    public void showPlayStatus() {
+        if (mRemoteViews != null) {
+            mRemoteViews.setImageViewResource(R.id.iv_diy_view_bottom_music_play_pause, R.drawable.icon_diy_view_bottom_music_view_pause);
+            mNotificationManager.notify(NOTIFICATION_ID, mNotification);
+        }
+    }
+
+    /**
+     * 展示暂停的状态
+     */
+    public void showPauseStatus() {
+        if (mRemoteViews != null) {
+            mRemoteViews.setImageViewResource(R.id.iv_diy_view_bottom_music_play_pause, R.drawable.icon_diy_view_bottom_music_view_play);
+            mNotificationManager.notify(NOTIFICATION_ID, mNotification);
+        }
+    }
+
+    /**
+     * 更换其他歌曲的时候,更新其他信息
+     */
+    public void showLoadStatus(AudioBean mAudioBean) {
+        /*
+         *更换数据
+         */
+        this.mAudioBean = mAudioBean;
+        if (mRemoteViews != null && mAudioBean != null) {
+            /*
+             * 歌曲名称
+             */
+            mRemoteViews.setTextViewText(R.id.tv_diy_view_bottom_music_view_title, mAudioBean.musicName);
+            /*
+             * 专辑名称
+             */
+            mRemoteViews.setTextViewText(R.id.tv_notification_diy_music_author_name, mAudioBean.albumName);
+            /*
+             * 是否收藏
+             */
+            mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_is_favourite, R.drawable.icon_favourite);
+            /*
+             * 更新通知
+             */
+            mNotificationManager.notify(NOTIFICATION_ID, mNotification);
+        }
 
     }
+
+
 }

@@ -210,7 +210,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
          * 暂停的状态下,才可以进行恢复
          */
         if (mCustomMediaPlayer.getStatus() == CustomMediaPlayer.Status.PAUSE) {
-            mCustomMediaPlayer.start();
+            start();
         }
     }
 
