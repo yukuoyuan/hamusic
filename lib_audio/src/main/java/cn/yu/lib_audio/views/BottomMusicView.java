@@ -34,6 +34,7 @@ public class BottomMusicView extends ConstraintLayout implements View.OnClickLis
     private TextView tvDiyViewBottomMusicViewDesc;
     private ImageView ivDiyViewBottomMusicViewIsPlay;
     private ImageView ivDiyViewBottomMusicViewList;
+    private AudioBean mAudioBean;
 
     public BottomMusicView(Context context) {
         this(context, null);
@@ -166,8 +167,27 @@ public class BottomMusicView extends ConstraintLayout implements View.OnClickLis
      * 展示加载中的状态
      */
     public void showLoadingView() {
-        if (ivDiyViewBottomMusicViewIsPlay != null) {
-            ivDiyViewBottomMusicViewIsPlay.setImageResource(R.drawable.icon_diy_view_bottom_music_view_play);
+        /*
+         * 设置名字和图片和专辑名字
+         */
+        if (mAudioBean != null) {
+            /*
+             * 图片
+             */
+            ImageLoadManger.getInstance().loadCircleImage2ImageView(ivDiyViewBottomMusicViewBanner, mAudioBean.albumPic);
+            /*
+             * 名字
+             */
+            tvDiyViewBottomMusicViewTitle.setText(mAudioBean.musicName);
+            /*
+             * 专辑名字
+             */
+            tvDiyViewBottomMusicViewDesc.setText(mAudioBean.albumName);
+            /*
+             * 设置状态图片
+             */
+            ivDiyViewBottomMusicViewIsPlay.setImageResource(R.drawable.icon_diy_view_bottom_music_view_pause);
+
         }
     }
 
@@ -176,7 +196,7 @@ public class BottomMusicView extends ConstraintLayout implements View.OnClickLis
      */
     public void showPlayView() {
         if (ivDiyViewBottomMusicViewIsPlay != null) {
-            ivDiyViewBottomMusicViewIsPlay.setImageResource(R.drawable.icon_diy_view_bottom_music_view_play);
+            ivDiyViewBottomMusicViewIsPlay.setImageResource(R.drawable.icon_diy_view_bottom_music_view_pause);
         }
     }
 
@@ -185,7 +205,7 @@ public class BottomMusicView extends ConstraintLayout implements View.OnClickLis
      */
     public void showPauseView() {
         if (ivDiyViewBottomMusicViewIsPlay != null) {
-            ivDiyViewBottomMusicViewIsPlay.setImageResource(R.drawable.icon_diy_view_bottom_music_view_pause);
+            ivDiyViewBottomMusicViewIsPlay.setImageResource(R.drawable.icon_diy_view_bottom_music_view_play);
         }
     }
 
@@ -205,6 +225,7 @@ public class BottomMusicView extends ConstraintLayout implements View.OnClickLis
          */
         switch (event.getStatus()) {
             case LOAD:
+                mAudioBean = event.getAudioBean();
                 showLoadingView();
                 break;
             case ERROR:
