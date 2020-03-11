@@ -32,4 +32,9 @@ dependencies {
     compileOnly this.rootProject.depsLibs.greendao
     //占位主工程的eventbus库
     compileOnly this.rootProject.depsLibs.eventbus
+    //占位主工程的constraintlayout库
+    compileOnly this.rootProject.depsLibs.constraintlayout
+    //占位主工程的图片加载
+    compileOnly project(':lib_imageloader')
+
 }

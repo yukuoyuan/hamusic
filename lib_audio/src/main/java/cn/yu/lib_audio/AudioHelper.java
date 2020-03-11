@@ -3,6 +3,11 @@ package cn.yu.lib_audio;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
+import cn.yu.lib_audio.bean.AudioBean;
+import cn.yu.lib_audio.servicess.MusicService;
+
 /**
  * Created on 2020-03-05
  * 这是该module与外界通信的唯一桥梁类
@@ -28,6 +33,15 @@ public class AudioHelper {
             }
         }
         return mAudioHelper;
+    }
+
+    /**
+     * 启动播放服务
+     *
+     * @param audios 数据
+     */
+    public void startMusicService(ArrayList<AudioBean> audios) {
+        MusicService.startMusicService(audios);
     }
 
     /**

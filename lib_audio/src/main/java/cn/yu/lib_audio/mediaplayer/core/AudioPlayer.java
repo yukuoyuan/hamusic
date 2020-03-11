@@ -11,6 +11,7 @@ import android.util.Log;
 import org.greenrobot.eventbus.EventBus;
 
 import cn.yu.lib_audio.AudioHelper;
+import cn.yu.lib_audio.bean.AudioBean;
 import cn.yu.lib_audio.events.AudioEvent;
 
 /**
@@ -127,22 +128,23 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         /*
          * 发送事件
          */
-        postEvent(AudioEvent.AudioEventStatus.START);
+        postEvent(AudioEvent.AudioEventStatus.START, null);
     }
 
     /**
      * 发送各种事件
      *
-     * @param status 状态
+     * @param status    状态
+     * @param audioBean 数据
      */
-    private void postEvent(AudioEvent.AudioEventStatus status) {
-        EventBus.getDefault().post(new AudioEvent(status));
+    private void postEvent(AudioEvent.AudioEventStatus status, AudioBean audioBean) {
+        EventBus.getDefault().post(new AudioEvent(status, audioBean));
     }
 
     /**
      * 加载资源并播放
      */
-    public void load() {
+    public void load(AudioBean audioBean) {
         try {
             if (mCustomMediaPlayer != null) {
                 /*
@@ -152,7 +154,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 /*
                  * 设置播放源
                  */
-                mCustomMediaPlayer.setDataSource("");
+                mCustomMediaPlayer.setDataSource(audioBean.pathUrl);
                 /*
                  * 异步进行缓冲准备
                  */
@@ -160,14 +162,14 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 /*
                  * 发送事件
                  */
-                postEvent(AudioEvent.AudioEventStatus.LOAD);
+                postEvent(AudioEvent.AudioEventStatus.LOAD, audioBean);
             }
         } catch (Exception e) {
             e.printStackTrace();
             /*
              * 发送事件
              */
-            postEvent(AudioEvent.AudioEventStatus.ERROR);
+            postEvent(AudioEvent.AudioEventStatus.ERROR, null);
         }
 
     }
@@ -196,7 +198,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
             /*
              * 发送事件
              */
-            postEvent(AudioEvent.AudioEventStatus.PAUSE);
+            postEvent(AudioEvent.AudioEventStatus.PAUSE, null);
         }
     }
 
@@ -208,7 +210,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
          * 暂停的状态下,才可以进行恢复
          */
         if (mCustomMediaPlayer.getStatus() == CustomMediaPlayer.Status.PAUSE) {
-            mCustomMediaPlayer.start();
+            start();
         }
     }
 
@@ -240,7 +242,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         /*
          * 发送事件
          */
-        postEvent(AudioEvent.AudioEventStatus.RELEASE);
+        postEvent(AudioEvent.AudioEventStatus.RELEASE, null);
     }
 
     /**
@@ -264,7 +266,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         /*
          * 发送事件
          */
-        postEvent(AudioEvent.AudioEventStatus.COMPLETE);
+        postEvent(AudioEvent.AudioEventStatus.COMPLETE, null);
     }
 
     @Override
@@ -287,7 +289,7 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         /*
          * 发送事件
          */
-        postEvent(AudioEvent.AudioEventStatus.ERROR);
+        postEvent(AudioEvent.AudioEventStatus.ERROR, null);
         /*
          * return true 是自行处理,不需要播放器处理,并且不会回调comple回调
          */
