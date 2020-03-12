@@ -39,10 +39,6 @@ public class MusicService extends Service {
      * 用来交互通知的通知
      */
     private NotificationReceiver mReceiver;
-    /**
-     * 播放列表
-     */
-    private ArrayList<AudioBean> mAudioBeans;
 
     /**
      * 提供给外部使用打开服务
@@ -68,7 +64,7 @@ public class MusicService extends Service {
         /*
          * 得到播放列表
          */
-        mAudioBeans = (ArrayList<AudioBean>) intent.getSerializableExtra(DATA_AUDIOS);
+        ArrayList<AudioBean> mAudioBeans = (ArrayList<AudioBean>) intent.getSerializableExtra(DATA_AUDIOS);
         /*
          * 初始化通知
          */

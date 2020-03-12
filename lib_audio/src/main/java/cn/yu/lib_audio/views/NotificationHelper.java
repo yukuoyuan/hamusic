@@ -15,6 +15,7 @@ import cn.yu.lib_audio.R;
 import cn.yu.lib_audio.activitys.MusicPlayerActivity;
 import cn.yu.lib_audio.bean.AudioBean;
 import cn.yu.lib_audio.receivers.NotificationReceiver;
+import cn.yu.lib_imageloader.ImageLoadManger;
 
 /**
  * Created on 2020-03-11
@@ -252,6 +253,10 @@ public class NotificationHelper {
              * 是否收藏
              */
             mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_is_favourite, R.drawable.icon_favourite);
+            /*
+             * 封面
+             */
+            ImageLoadManger.getInstance().loadImage2NotificationImageView(AudioHelper.getInstance().getContext(), mAudioBean.albumPic, R.id.iv_notification_diy_music_banner, mRemoteViews, mNotification, NOTIFICATION_ID);
             /*
              * 更新通知
              */
