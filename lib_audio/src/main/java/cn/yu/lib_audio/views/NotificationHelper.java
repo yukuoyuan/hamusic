@@ -48,7 +48,7 @@ public class NotificationHelper {
     /**
      * 点击上一曲的请求码
      */
-    private static final int PREVIOUS_PENDINGINTENT_REQUEST_CODE = 2;
+    private static final int PREVIOUS_PENDING_INTENT_REQUEST_CODE = 2;
     /**
      * 点击播放暂停的请求码
      */
@@ -63,9 +63,13 @@ public class NotificationHelper {
      */
     private AudioBean mAudioBean;
     /**
-     * 通知自定义Ui
+     * 通知自定义Ui(大布局)
      */
     private RemoteViews mRemoteViews;
+    /**
+     * 通知自定义Ui(小布局)
+     */
+    private RemoteViews mSmallRemoteViews;
     /**
      * 通知管理器
      */
@@ -106,6 +110,10 @@ public class NotificationHelper {
              */
             initRemoteView();
             /*
+             * 初始化自定义小布局
+             */
+            initSmallRemoteView();
+            /*
              * 构建跳转的意图
              */
             Intent intent = new Intent(AudioHelper.getInstance().getContext(), MusicPlayerActivity.class);
@@ -132,17 +140,51 @@ public class NotificationHelper {
             }
             NotificationCompat.Builder builder = new NotificationCompat.Builder(AudioHelper.getInstance().getContext(), CHANNEL_ID)
                     .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.icon_diy_view_bottom_music_view_list)
+                    .setSmallIcon(R.drawable.ic_launcher)
                     //大布局
                     .setCustomBigContentView(mRemoteViews)
                     //正常布局
-                    .setContent(mRemoteViews);
+                    .setContent(mSmallRemoteViews);
             mNotification = builder.build();
+            mNotificationManager.notify(NOTIFICATION_ID, mNotification);
         }
     }
 
     /**
-     * 初始化remoteView
+     * 初始化remoteView(小布局)
+     */
+    private void initSmallRemoteView() {
+        int layoutId = R.layout.notification_diy_music_small;
+        mSmallRemoteViews = new RemoteViews(AudioHelper.getInstance().getContext().getPackageName(), layoutId);
+        /*
+         * 点击上一曲
+         */
+        Intent nexIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
+        nexIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
+        PendingIntent nextPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), NEXT_PENDING_INTENT_REQUEST_CODE, nexIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mSmallRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_next, nextPendingIntent);
+
+
+        /*
+         * 点击下一曲
+         */
+        Intent previousIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
+        previousIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
+        PendingIntent previousPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PREVIOUS_PENDING_INTENT_REQUEST_CODE, previousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mSmallRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_previous, previousPendingIntent);
+
+
+        /*
+         * 点击播放或者暂停
+         */
+        Intent playOrPauseIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
+        playOrPauseIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
+        PendingIntent playOrPausePendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PLAY_OR_PAUSE_PENDING_INTENT_REQUEST_CODE, playOrPauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mSmallRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_play_pause, playOrPausePendingIntent);
+    }
+
+    /**
+     * 初始化remoteView(大布局)
      */
     private void initRemoteView() {
         int layoutId = R.layout.notification_diy_music;
@@ -153,7 +195,7 @@ public class NotificationHelper {
         Intent nexIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
         nexIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
         PendingIntent nextPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), NEXT_PENDING_INTENT_REQUEST_CODE, nexIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mRemoteViews.setOnClickPendingIntent(R.id.iv_diy_view_bottom_music_next, nextPendingIntent);
+        mRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_next, nextPendingIntent);
 
 
         /*
@@ -161,8 +203,8 @@ public class NotificationHelper {
          */
         Intent previousIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
         previousIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
-        PendingIntent previousPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PREVIOUS_PENDINGINTENT_REQUEST_CODE, previousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mRemoteViews.setOnClickPendingIntent(R.id.iv_diy_view_bottom_music_previous, previousPendingIntent);
+        PendingIntent previousPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PREVIOUS_PENDING_INTENT_REQUEST_CODE, previousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_previous, previousPendingIntent);
 
 
         /*
@@ -171,7 +213,7 @@ public class NotificationHelper {
         Intent playOrPauseIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
         playOrPauseIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
         PendingIntent playOrPausePendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PLAY_OR_PAUSE_PENDING_INTENT_REQUEST_CODE, playOrPauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mRemoteViews.setOnClickPendingIntent(R.id.iv_diy_view_bottom_music_play_pause, playOrPausePendingIntent);
+        mRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_play_pause, playOrPausePendingIntent);
     }
 
     /**
@@ -179,7 +221,7 @@ public class NotificationHelper {
      */
     public void showPlayStatus() {
         if (mRemoteViews != null) {
-            mRemoteViews.setImageViewResource(R.id.iv_diy_view_bottom_music_play_pause, R.drawable.icon_diy_view_bottom_music_view_pause);
+            mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_play_pause, R.drawable.icon_diy_view_bottom_music_view_pause);
             mNotificationManager.notify(NOTIFICATION_ID, mNotification);
         }
     }
@@ -189,7 +231,7 @@ public class NotificationHelper {
      */
     public void showPauseStatus() {
         if (mRemoteViews != null) {
-            mRemoteViews.setImageViewResource(R.id.iv_diy_view_bottom_music_play_pause, R.drawable.icon_diy_view_bottom_music_view_play);
+            mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_play_pause, R.drawable.icon_diy_view_bottom_music_view_play);
             mNotificationManager.notify(NOTIFICATION_ID, mNotification);
         }
     }
