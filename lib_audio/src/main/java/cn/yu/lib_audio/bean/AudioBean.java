@@ -35,7 +35,7 @@ public class AudioBean implements Serializable {
     public String albumPic;
 
 
-    public AudioBean(String id, String pathUrl, String musicName, String authorName, String albumName, String albumPic) {
+    public AudioBean(String id, String pathUrl, String albumName, String authorName, String musicName, String albumPic) {
         this.id = id;
         this.pathUrl = pathUrl;
         this.musicName = musicName;

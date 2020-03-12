@@ -248,11 +248,11 @@ public class NotificationHelper {
             /*
              * 歌曲名称
              */
-            mRemoteViews.setTextViewText(R.id.tv_diy_view_bottom_music_view_title, mAudioBean.musicName);
+            mRemoteViews.setTextViewText(R.id.tv_notification_diy_music_title, mAudioBean.musicName);
             /*
              * 专辑名称
              */
-            mRemoteViews.setTextViewText(R.id.tv_notification_diy_music_author_name, mAudioBean.albumName);
+            mRemoteViews.setTextViewText(R.id.tv_notification_diy_music_author_name, mAudioBean.authorName);
             /*
              * 是否收藏
              */
