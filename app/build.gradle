@@ -30,9 +30,9 @@ dependencies {
     implementation this.rootProject.depsLibs.appcompat
     implementation this.rootProject.depsLibs.constraintlayout
     annotationProcessor this.rootProject.depsLibs.butterknifecompiler
-    //占位主工程的数据库greendao
+    //数据库greendao
     implementation this.rootProject.depsLibs.greendao
-    //占位主工程的eventbus库
+    //eventbus库
     implementation this.rootProject.depsLibs.eventbus
 
     //引用基础库
