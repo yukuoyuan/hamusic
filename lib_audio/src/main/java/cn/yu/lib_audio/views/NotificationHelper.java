@@ -59,10 +59,6 @@ public class NotificationHelper {
     private Notification mNotification;
 
     /**
-     * 当前播放歌曲的实体类
-     */
-    private AudioBean mAudioBean;
-    /**
      * 通知自定义Ui(大布局)
      */
     private RemoteViews mRemoteViews;
@@ -243,7 +239,6 @@ public class NotificationHelper {
         /*
          *更换数据
          */
-        this.mAudioBean = mAudioBean;
         if (mRemoteViews != null && mAudioBean != null) {
             /*
              * 歌曲名称
