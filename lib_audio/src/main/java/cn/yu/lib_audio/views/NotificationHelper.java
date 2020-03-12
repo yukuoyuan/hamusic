@@ -169,7 +169,7 @@ public class NotificationHelper {
          * 点击下一曲
          */
         Intent previousIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
-        previousIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
+        previousIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_PRE);
         PendingIntent previousPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PREVIOUS_PENDING_INTENT_REQUEST_CODE, previousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mSmallRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_previous, previousPendingIntent);
 
@@ -178,7 +178,7 @@ public class NotificationHelper {
          * 点击播放或者暂停
          */
         Intent playOrPauseIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
-        playOrPauseIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
+        playOrPauseIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_PLAY);
         PendingIntent playOrPausePendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PLAY_OR_PAUSE_PENDING_INTENT_REQUEST_CODE, playOrPauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mSmallRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_play_pause, playOrPausePendingIntent);
     }
@@ -202,7 +202,7 @@ public class NotificationHelper {
          * 点击下一曲
          */
         Intent previousIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
-        previousIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
+        previousIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_PRE);
         PendingIntent previousPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PREVIOUS_PENDING_INTENT_REQUEST_CODE, previousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_previous, previousPendingIntent);
 
@@ -211,7 +211,7 @@ public class NotificationHelper {
          * 点击播放或者暂停
          */
         Intent playOrPauseIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
-        playOrPauseIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
+        playOrPauseIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_PLAY);
         PendingIntent playOrPausePendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PLAY_OR_PAUSE_PENDING_INTENT_REQUEST_CODE, playOrPauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         mRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_play_pause, playOrPausePendingIntent);
     }

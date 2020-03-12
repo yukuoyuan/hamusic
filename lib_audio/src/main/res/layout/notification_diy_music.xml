@@ -33,7 +33,7 @@
         android:textSize="12sp"
         tools:text="隔壁老王" />
 
-    <View
+    <TextView
         android:id="@+id/v_notification_diy_music_center_line"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
