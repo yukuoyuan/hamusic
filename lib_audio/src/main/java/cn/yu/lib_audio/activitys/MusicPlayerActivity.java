@@ -1,10 +1,8 @@
 package cn.yu.lib_audio.activitys;
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -19,6 +17,7 @@ import cn.yu.lib_audio.dbs.MusicDapHelper;
 import cn.yu.lib_audio.events.AudioEvent;
 import cn.yu.lib_audio.mediaplayer.control.AudioController;
 import cn.yu.lib_audio.mediaplayer.core.CustomMediaPlayer;
+import cn.yu.lib_audio.utils.TimeUtils;
 import cn.yu.lib_base.activitys.BaseActivity;
 
 /**
@@ -200,6 +199,14 @@ public class MusicPlayerActivity extends BaseActivity implements View.OnClickLis
      * @param duration        总的时长
      */
     private void setTimeData2View(int currentPosition, int duration) {
+        /*
+         * 设置时间显示
+         */
+        tvMusicPlayerActivityBottomCenterStartTime.setText(TimeUtils.getInstance().msConvertMinutesAndSeconds(currentPosition));
+        tvMusicPlayerActivityBottomCenterEndTime.setText(TimeUtils.getInstance().msConvertMinutesAndSeconds(duration));
+        /*
+         * 设置进度条
+         */
         sbMusicPlayerActivityBottomCenterProgress.setProgress(currentPosition);
         sbMusicPlayerActivityBottomCenterProgress.setMax(duration);
         /*
@@ -241,7 +248,9 @@ public class MusicPlayerActivity extends BaseActivity implements View.OnClickLis
              */
             onBackPressed();
         } else if (id == R.id.iv_music_player_activity_title_right_share) {
-
+            /*
+             * 分享弹窗
+             */
         } else if (id == R.id.iv_music_player_activity_bottom_top_favourite) {
             /*
              * 是否收藏音乐
@@ -269,6 +278,9 @@ public class MusicPlayerActivity extends BaseActivity implements View.OnClickLis
              */
             AudioController.getInstance().nextMusic();
         } else if (id == R.id.iv_music_player_activity_bottom_bottom_list) {
+            /*
+             * 音乐列表弹窗
+             */
         }
     }
 
