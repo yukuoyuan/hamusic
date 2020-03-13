@@ -7,6 +7,7 @@
     android:background="@android:color/holo_red_dark">
     <!--    标题-->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_music_player_activity_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,8 +66,15 @@
             app:layout_constraintTop_toBottomOf="@id/tv_music_player_activity_title_description"
             tools:text="周杰伦" />
     </android.support.constraint.ConstraintLayout>
+
+    <cn.yu.lib_audio.views.MusicIndicatorView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/cl_music_player_activity_bottom"
+        app:layout_constraintTop_toBottomOf="@id/cl_music_player_activity_title" />
     <!--    底部布局-->
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_music_player_activity_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
