@@ -182,7 +182,7 @@ public class BottomMusicView extends ConstraintLayout implements View.OnClickLis
             /*
              * 专辑名字
              */
-            tvDiyViewBottomMusicViewDesc.setText(mAudioBean.albumName);
+            tvDiyViewBottomMusicViewDesc.setText(mAudioBean.authorName);
             /*
              * 设置状态图片
              */

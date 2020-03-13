@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="64dp">
+
+    <ImageView
+        android:id="@+id/iv_notification_diy_music_banner"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/iv_notification_diy_music_banner"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_notification_diy_music_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="四块五" />
+
+        <TextView
+            android:id="@+id/tv_notification_diy_music_author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            tools:text="隔壁老王" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_notification_diy_music_play_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_diy_view_bottom_music_view_play" />
+
+        <ImageView
+            android:id="@+id/iv_notification_diy_music_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/icon_notification_next" />
+
+        <TextView
+            android:id="@+id/tv_notification_diy_music_is_show_lyrics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="词"
+            android:textColor="#666666"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</RelativeLayout>

@@ -14,7 +14,10 @@ import cn.yu.lib_audio.AudioHelper;
 import cn.yu.lib_audio.R;
 import cn.yu.lib_audio.activitys.MusicPlayerActivity;
 import cn.yu.lib_audio.bean.AudioBean;
+import cn.yu.lib_audio.bean.FavoriteBean;
+import cn.yu.lib_audio.dbs.MusicDapHelper;
 import cn.yu.lib_audio.receivers.NotificationReceiver;
+import cn.yu.lib_imageloader.ImageLoadManger;
 
 /**
  * Created on 2020-03-11
@@ -38,39 +41,43 @@ public class NotificationHelper {
     private static final int NOTIFICATION_ID = 0x111;
 
     /**
-     * 当前对象
-     */
-    private static NotificationHelper mNotificationHelper = null;
-    /**
      * 点击下一曲的请求码
      */
     private static final int NEXT_PENDING_INTENT_REQUEST_CODE = 1;
     /**
      * 点击上一曲的请求码
      */
-    private static final int PREVIOUS_PENDINGINTENT_REQUEST_CODE = 2;
+    private static final int PREVIOUS_PENDING_INTENT_REQUEST_CODE = 2;
     /**
      * 点击播放暂停的请求码
      */
     private static final int PLAY_OR_PAUSE_PENDING_INTENT_REQUEST_CODE = 3;
+    /**
+     * 是否收藏的请求码
+     */
+    private static final int IS_FAVOURITE_PENDING_INTENT_REQUEST_CODE = 4;
+
     /**
      * 通知
      */
     private Notification mNotification;
 
     /**
-     * 当前播放歌曲的实体类
-     */
-    private AudioBean mAudioBean;
-    /**
-     * 通知自定义Ui
+     * 通知自定义Ui(大布局)
      */
     private RemoteViews mRemoteViews;
+    /**
+     * 通知自定义Ui(小布局)
+     */
+    private RemoteViews mSmallRemoteViews;
     /**
      * 通知管理器
      */
     private NotificationManager mNotificationManager;
-
+    /**
+     * 当前对象
+     */
+    private static NotificationHelper mNotificationHelper = null;
 
     private NotificationHelper() {
     }
@@ -106,6 +113,10 @@ public class NotificationHelper {
              */
             initRemoteView();
             /*
+             * 初始化自定义小布局
+             */
+            initSmallRemoteView();
+            /*
              * 构建跳转的意图
              */
             Intent intent = new Intent(AudioHelper.getInstance().getContext(), MusicPlayerActivity.class);
@@ -132,17 +143,52 @@ public class NotificationHelper {
             }
             NotificationCompat.Builder builder = new NotificationCompat.Builder(AudioHelper.getInstance().getContext(), CHANNEL_ID)
                     .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.icon_diy_view_bottom_music_view_list)
+                    .setSmallIcon(R.drawable.ic_launcher)
                     //大布局
                     .setCustomBigContentView(mRemoteViews)
                     //正常布局
-                    .setContent(mRemoteViews);
+                    .setContent(mSmallRemoteViews);
             mNotification = builder.build();
+            mNotificationManager.notify(NOTIFICATION_ID, mNotification);
         }
     }
 
     /**
-     * 初始化remoteView
+     * 初始化remoteView(小布局)
+     */
+    private void initSmallRemoteView() {
+        int layoutId = R.layout.notification_diy_music_small;
+        mSmallRemoteViews = new RemoteViews(AudioHelper.getInstance().getContext().getPackageName(), layoutId);
+        /*
+         * 点击上一曲
+         */
+        Intent nexIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
+        nexIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
+        PendingIntent nextPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), NEXT_PENDING_INTENT_REQUEST_CODE, nexIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mSmallRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_next, nextPendingIntent);
+
+
+        /*
+         * 点击下一曲
+         */
+        Intent previousIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
+        previousIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_PRE);
+        PendingIntent previousPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PREVIOUS_PENDING_INTENT_REQUEST_CODE, previousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mSmallRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_previous, previousPendingIntent);
+
+
+        /*
+         * 点击播放或者暂停
+         */
+        Intent playOrPauseIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
+        playOrPauseIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_PLAY);
+        PendingIntent playOrPausePendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PLAY_OR_PAUSE_PENDING_INTENT_REQUEST_CODE, playOrPauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mSmallRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_play_pause, playOrPausePendingIntent);
+
+    }
+
+    /**
+     * 初始化remoteView(大布局)
      */
     private void initRemoteView() {
         int layoutId = R.layout.notification_diy_music;
@@ -153,25 +199,33 @@ public class NotificationHelper {
         Intent nexIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
         nexIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
         PendingIntent nextPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), NEXT_PENDING_INTENT_REQUEST_CODE, nexIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mRemoteViews.setOnClickPendingIntent(R.id.iv_diy_view_bottom_music_next, nextPendingIntent);
+        mRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_next, nextPendingIntent);
 
 
         /*
          * 点击下一曲
          */
         Intent previousIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
-        previousIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
-        PendingIntent previousPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PREVIOUS_PENDINGINTENT_REQUEST_CODE, previousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mRemoteViews.setOnClickPendingIntent(R.id.iv_diy_view_bottom_music_previous, previousPendingIntent);
+        previousIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_PRE);
+        PendingIntent previousPendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PREVIOUS_PENDING_INTENT_REQUEST_CODE, previousIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_previous, previousPendingIntent);
 
 
         /*
          * 点击播放或者暂停
          */
         Intent playOrPauseIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
-        playOrPauseIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_NEXT);
+        playOrPauseIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_PLAY);
         PendingIntent playOrPausePendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), PLAY_OR_PAUSE_PENDING_INTENT_REQUEST_CODE, playOrPauseIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mRemoteViews.setOnClickPendingIntent(R.id.iv_diy_view_bottom_music_play_pause, playOrPausePendingIntent);
+        mRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_play_pause, playOrPausePendingIntent);
+
+        /*
+         * 点击收藏按钮
+         */
+        Intent isFavoriteIntent = new Intent(NotificationReceiver.ACTION_STATUS_BAR);
+        isFavoriteIntent.putExtra(NotificationReceiver.EXTRA, NotificationReceiver.EXTRA_IS_FAVOURITE);
+        PendingIntent isFavoritePendingIntent = PendingIntent.getBroadcast(AudioHelper.getInstance().getContext(), IS_FAVOURITE_PENDING_INTENT_REQUEST_CODE, isFavoriteIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mRemoteViews.setOnClickPendingIntent(R.id.iv_notification_diy_music_is_favourite, isFavoritePendingIntent);
     }
 
     /**
@@ -179,7 +233,7 @@ public class NotificationHelper {
      */
     public void showPlayStatus() {
         if (mRemoteViews != null) {
-            mRemoteViews.setImageViewResource(R.id.iv_diy_view_bottom_music_play_pause, R.drawable.icon_diy_view_bottom_music_view_pause);
+            mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_play_pause, R.drawable.icon_diy_view_bottom_music_view_pause);
             mNotificationManager.notify(NOTIFICATION_ID, mNotification);
         }
     }
@@ -189,7 +243,23 @@ public class NotificationHelper {
      */
     public void showPauseStatus() {
         if (mRemoteViews != null) {
-            mRemoteViews.setImageViewResource(R.id.iv_diy_view_bottom_music_play_pause, R.drawable.icon_diy_view_bottom_music_view_play);
+            mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_play_pause, R.drawable.icon_diy_view_bottom_music_view_play);
+            mNotificationManager.notify(NOTIFICATION_ID, mNotification);
+        }
+    }
+
+    /**
+     * 展示是否收藏的状态
+     *
+     * @param isFavorite 是否收藏
+     */
+    public void showIsFavoriteStatus(boolean isFavorite) {
+        if (mRemoteViews != null) {
+            if (isFavorite) {
+                mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_is_favourite, R.drawable.icon_favourite);
+            } else {
+                mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_is_favourite, R.drawable.icon_un_favourite);
+            }
             mNotificationManager.notify(NOTIFICATION_ID, mNotification);
         }
     }
@@ -201,20 +271,28 @@ public class NotificationHelper {
         /*
          *更换数据
          */
-        this.mAudioBean = mAudioBean;
         if (mRemoteViews != null && mAudioBean != null) {
             /*
              * 歌曲名称
              */
-            mRemoteViews.setTextViewText(R.id.tv_diy_view_bottom_music_view_title, mAudioBean.musicName);
+            mRemoteViews.setTextViewText(R.id.tv_notification_diy_music_title, mAudioBean.musicName);
             /*
              * 专辑名称
              */
-            mRemoteViews.setTextViewText(R.id.tv_notification_diy_music_author_name, mAudioBean.albumName);
+            mRemoteViews.setTextViewText(R.id.tv_notification_diy_music_author_name, mAudioBean.authorName);
             /*
              * 是否收藏
              */
-            mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_is_favourite, R.drawable.icon_favourite);
+            FavoriteBean favoriteBean = MusicDapHelper.getInstance().searchFavoriteBean(mAudioBean);
+            if (favoriteBean != null) {
+                mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_is_favourite, R.drawable.icon_favourite);
+            } else {
+                mRemoteViews.setImageViewResource(R.id.iv_notification_diy_music_is_favourite, R.drawable.icon_un_favourite);
+            }
+            /*
+             * 封面
+             */
+            ImageLoadManger.getInstance().loadImage2NotificationImageView(AudioHelper.getInstance().getContext(), mAudioBean.albumPic, R.id.iv_notification_diy_music_banner, mRemoteViews, mNotification, NOTIFICATION_ID);
             /*
              * 更新通知
              */

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!--    此配置文件只是为了应对高版本Andorid系统对于Http不支持情况的解决-->
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

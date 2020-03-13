@@ -37,7 +37,15 @@ public class AudioEvent {
         /**
          * 播放错误
          */
-        ERROR
+        ERROR,
+        /**
+         * 收藏歌曲
+         */
+        FAVORITE,
+        /**
+         * 取消收藏
+         */
+        CANCEL_FAVORITE
     }
 
     /**

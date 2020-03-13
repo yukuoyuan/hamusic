@@ -39,10 +39,6 @@ public class MusicService extends Service {
      * 用来交互通知的通知
      */
     private NotificationReceiver mReceiver;
-    /**
-     * 播放列表
-     */
-    private ArrayList<AudioBean> mAudioBeans;
 
     /**
      * 提供给外部使用打开服务
@@ -68,7 +64,7 @@ public class MusicService extends Service {
         /*
          * 得到播放列表
          */
-        mAudioBeans = (ArrayList<AudioBean>) intent.getSerializableExtra(DATA_AUDIOS);
+        ArrayList<AudioBean> mAudioBeans = (ArrayList<AudioBean>) intent.getSerializableExtra(DATA_AUDIOS);
         /*
          * 初始化通知
          */
@@ -113,6 +109,18 @@ public class MusicService extends Service {
                  */
                 AudioBean audioBean = audioEvent.getAudioBean();
                 NotificationHelper.getInstance().showLoadStatus(audioBean);
+                break;
+            case FAVORITE:
+                /*
+                 * 展示收藏状态
+                 */
+                NotificationHelper.getInstance().showIsFavoriteStatus(true);
+                break;
+            case CANCEL_FAVORITE:
+                /*
+                 * 展示取消收藏状态
+                 */
+                NotificationHelper.getInstance().showIsFavoriteStatus(false);
                 break;
             default:
                 break;
