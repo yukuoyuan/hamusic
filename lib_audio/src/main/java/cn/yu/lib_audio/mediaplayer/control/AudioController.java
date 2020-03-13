@@ -160,7 +160,7 @@ public class AudioController {
 
     /**
      * 获取当前播放的索引
-
+     *
      * @return 索引
      */
     public int getQueueIndex() {
@@ -358,16 +358,6 @@ public class AudioController {
          * 播放完毕了
          */
         switch (event.getStatus()) {
-            case LOAD:
-                break;
-            case ERROR:
-                break;
-            case PAUSE:
-                break;
-            case START:
-                break;
-            case RELEASE:
-                break;
             case COMPLETE:
                 /*
                  * 下一首

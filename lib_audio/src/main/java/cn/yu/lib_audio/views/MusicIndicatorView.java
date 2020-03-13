@@ -140,8 +140,21 @@ public class MusicIndicatorView extends ConstraintLayout implements ViewPager.On
     }
 
     @Override
-    public void onPageScrollStateChanged(int i) {
-
+    public void onPageScrollStateChanged(int state) {
+        /*
+         * 逻辑有问题,会导致没有翻页的情况下不播放动画了
+         */
+//        switch (state) {
+//            case ViewPager.SCROLL_STATE_IDLE:
+//                showPlayStatus();
+//                break;
+//            case ViewPager.SCROLL_STATE_DRAGGING:
+//                showPauseStatus();
+//                break;
+//            case ViewPager.SCROLL_STATE_SETTLING:
+//            default:
+//                break;
+//        }
     }
 
     /**

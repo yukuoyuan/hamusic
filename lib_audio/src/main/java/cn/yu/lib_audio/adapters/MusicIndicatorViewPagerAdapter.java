@@ -78,6 +78,7 @@ public class MusicIndicatorViewPagerAdapter extends PagerAdapter {
      * @return 动画
      */
     private ObjectAnimator createAnimator(ImageView ivDiyViewMusicIndicatorViewBg) {
+        ivDiyViewMusicIndicatorViewBg.setRotation(0);
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(ivDiyViewMusicIndicatorViewBg, View.ROTATION.getName(), 0, 360);
         /*
          * 时间
