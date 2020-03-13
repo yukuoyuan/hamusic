@@ -1,7 +1,10 @@
 package cn.yu.lib_audio.activitys;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -256,6 +259,10 @@ public class MusicPlayerActivity extends BaseActivity implements View.OnClickLis
              * 是否收藏音乐
              */
             AudioController.getInstance().isFavoriteMusic();
+            /*
+             * 展示动画
+             */
+            showFavoriteImgAnimation();
         } else if (id == R.id.iv_music_player_activity_bottom_bottom_play_mode) {
             /*
              * 改变播放模式
@@ -282,6 +289,40 @@ public class MusicPlayerActivity extends BaseActivity implements View.OnClickLis
              * 音乐列表弹窗
              */
         }
+    }
+
+    private void showFavoriteImgAnimation() {
+        /*
+         * 组合动画
+         */
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(ivMusicPlayerActivityBottomTopFavourite, View.SCALE_X.getName(), 1.0f, 1.2f, 1.0f);
+        /*
+         * 匀速的
+         */
+        objectAnimatorX.setInterpolator(new LinearInterpolator());
+        /*
+         * 动画时长
+         */
+        objectAnimatorX.setDuration(300);
+
+        ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(ivMusicPlayerActivityBottomTopFavourite, View.SCALE_Y.getName(), 1.0f, 1.2f, 1.0f);
+        /*
+         * 匀速的
+         */
+        objectAnimatorY.setInterpolator(new LinearInterpolator());
+        /*
+         * 动画时长
+         */
+        objectAnimatorY.setDuration(300);
+        /*
+         * 同时的
+         */
+        animatorSet.play(objectAnimatorX).with(objectAnimatorY);
+        /*
+         * 开始动画
+         */
+        animatorSet.start();
     }
 
     /**
