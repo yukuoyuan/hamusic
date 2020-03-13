@@ -2,6 +2,7 @@ package cn.yu.lib_audio.views;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,6 +15,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import cn.yu.lib_audio.R;
+import cn.yu.lib_audio.activitys.MusicPlayerActivity;
 import cn.yu.lib_audio.bean.AudioBean;
 import cn.yu.lib_audio.events.AudioEvent;
 import cn.yu.lib_audio.mediaplayer.control.AudioController;
@@ -76,6 +78,7 @@ public class BottomMusicView extends ConstraintLayout implements View.OnClickLis
     private void initListener() {
         ivDiyViewBottomMusicViewList.setOnClickListener(this);
         ivDiyViewBottomMusicViewIsPlay.setOnClickListener(this);
+        setOnClickListener(this);
     }
 
     /**
@@ -260,6 +263,11 @@ public class BottomMusicView extends ConstraintLayout implements View.OnClickLis
              * 弹出播放列表
              */
 
+        } else {
+            /*
+             * 跳转详情界面
+             */
+            getContext().startActivity(new Intent(getContext(), MusicPlayerActivity.class));
         }
     }
 }

@@ -45,7 +45,11 @@ public class AudioEvent {
         /**
          * 取消收藏
          */
-        CANCEL_FAVORITE
+        CANCEL_FAVORITE,
+        /**
+         * 进度
+         */
+        PROGRESS
     }
 
     /**
@@ -56,10 +60,24 @@ public class AudioEvent {
      * 播放数据
      */
     private AudioBean audioBean;
+    /**
+     * 播放的位置
+     */
+    private int currentPosition;
+    /**
+     * 总的时长
+     */
+    private int duration;
 
     public AudioEvent(AudioEventStatus status, AudioBean audioBean) {
         this.status = status;
         this.audioBean = audioBean;
+    }
+
+    public AudioEvent(AudioEventStatus status, int currentPosition, int duration) {
+        this.status = status;
+        this.currentPosition = currentPosition;
+        this.duration = duration;
     }
 
     /**

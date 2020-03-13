@@ -4,6 +4,9 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.os.PowerManager;
 import android.util.Log;
 
@@ -30,6 +33,14 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
      */
     private static final String TAG = "AudioPlayer";
     /**
+     * 消息标识
+     */
+    private static final int TIME_MSG = 0x01;
+    /**
+     * 100ms的延时发送
+     */
+    private static final int TIME_DELAY = 100;
+    /**
      * 焦点管理器
      */
     private AudioFocusManager mAudioFocusManager;
@@ -41,6 +52,26 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
      * 是否是外界导致的暂时失去焦点
      */
     private boolean isAudioFocusLossTransient;
+    /**
+     * 用来处理进度
+     */
+    private Handler mHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case TIME_MSG:
+                    EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.PROGRESS, getCurrentPosition(), getDuration()));
+                    /*
+                     * 发送延时消息
+                     */
+                    sendEmptyMessageDelayed(TIME_MSG, TIME_DELAY);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     public AudioPlayer() {
         /*
@@ -126,6 +157,10 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
          */
         mWifiLock.acquire();
         /*
+         * 开始监听进度
+         */
+        mHandler.sendEmptyMessage(TIME_MSG);
+        /*
          * 发送事件
          */
         postEvent(AudioEvent.AudioEventStatus.START, null);
@@ -196,6 +231,12 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
                 mAudioFocusManager.abandonAudioFocus();
             }
             /*
+             * 移除所有的消息
+             */
+            if (mHandler != null) {
+                mHandler.removeCallbacksAndMessages(null);
+            }
+            /*
              * 发送事件
              */
             postEvent(AudioEvent.AudioEventStatus.PAUSE, null);
@@ -240,6 +281,12 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
             mAudioFocusManager = null;
         }
         /*
+         * 移除所有的消息
+         */
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
+        /*
          * 发送事件
          */
         postEvent(AudioEvent.AudioEventStatus.RELEASE, null);
@@ -260,6 +307,31 @@ public class AudioPlayer implements MediaPlayer.OnCompletionListener, MediaPlaye
         return CustomMediaPlayer.Status.STOP;
     }
 
+    /**
+     * 获取进度
+     *
+     * @return 进度
+     */
+    public int getCurrentPosition() {
+        if (getStatus() == CustomMediaPlayer.Status.START
+                || getStatus() == CustomMediaPlayer.Status.PAUSE) {
+            return mCustomMediaPlayer.getCurrentPosition();
+        }
+        return 0;
+    }
+
+    /**
+     * 获取总的时长
+     *
+     * @return 总的时长
+     */
+    public int getDuration() {
+        if (getStatus() == CustomMediaPlayer.Status.START
+                || getStatus() == CustomMediaPlayer.Status.PAUSE) {
+            return mCustomMediaPlayer.getDuration();
+        }
+        return 0;
+    }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
