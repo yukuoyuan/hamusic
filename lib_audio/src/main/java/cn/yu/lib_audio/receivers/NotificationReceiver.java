@@ -39,7 +39,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     /**
      * 收藏的按钮
      */
-    public static final String EXTRA_FAV = "play_favourite";
+    public static final String EXTRA_IS_FAVOURITE = "play_favourite";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -65,6 +65,12 @@ public class NotificationReceiver extends BroadcastReceiver {
                  * 上一曲
                  */
                 AudioController.getInstance().previousMusic();
+                break;
+            case EXTRA_IS_FAVOURITE:
+                /*
+                 * 是否收藏
+                 */
+                AudioController.getInstance().isFavoriteMusic();
                 break;
             default:
                 break;

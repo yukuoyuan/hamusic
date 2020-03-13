@@ -110,6 +110,18 @@ public class MusicService extends Service {
                 AudioBean audioBean = audioEvent.getAudioBean();
                 NotificationHelper.getInstance().showLoadStatus(audioBean);
                 break;
+            case FAVORITE:
+                /*
+                 * 展示收藏状态
+                 */
+                NotificationHelper.getInstance().showIsFavoriteStatus(true);
+                break;
+            case CANCEL_FAVORITE:
+                /*
+                 * 展示取消收藏状态
+                 */
+                NotificationHelper.getInstance().showIsFavoriteStatus(false);
+                break;
             default:
                 break;
         }

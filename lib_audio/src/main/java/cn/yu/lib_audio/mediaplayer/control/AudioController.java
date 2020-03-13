@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cn.yu.lib_audio.bean.AudioBean;
+import cn.yu.lib_audio.dbs.MusicDapHelper;
 import cn.yu.lib_audio.events.AudioEvent;
 import cn.yu.lib_audio.mediaplayer.core.AudioPlayer;
 import cn.yu.lib_audio.mediaplayer.core.CustomMediaPlayer;
@@ -39,6 +40,7 @@ public class AudioController {
      * 播放模式,默认是列表循环
      */
     private PlayMode mPlayMode = PlayMode.LOOP;
+
 
     /**
      * 播放方式
@@ -141,6 +143,26 @@ public class AudioController {
                 break;
         }
         return getNowPlaying(mQueueIndex);
+    }
+
+    /**
+     * 点击进行是否收藏操作
+     */
+    public void isFavoriteMusic() {
+        if (null != MusicDapHelper.getInstance().searchFavoriteBean(getNowPlaying())) {
+            /*
+             * 已经收藏的话移除收藏
+             */
+            MusicDapHelper.getInstance().removeFavoriteBean(getNowPlaying());
+            EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.CANCEL_FAVORITE, null));
+        } else {
+            /*
+             * 没有收藏的话进行收藏
+             */
+            MusicDapHelper.getInstance().addFavoriteMusic(getNowPlaying());
+            EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.FAVORITE, null));
+        }
+
     }
 
     /**
