@@ -146,6 +146,28 @@ public class AudioController {
     }
 
     /**
+     * 指定播放某一首歌曲
+     *
+     * @param mQueueIndex 索引
+     */
+    public void setQueueIndex(int mQueueIndex) {
+        if (ListUtils.getInstance().isEmoty(mAudioBeanArrayList)) {
+            return;
+        }
+        this.mQueueIndex = mQueueIndex;
+        start();
+    }
+
+    /**
+     * 获取当前播放的索引
+
+     * @return 索引
+     */
+    public int getQueueIndex() {
+        return mQueueIndex;
+    }
+
+    /**
      * 点击进行是否收藏操作
      */
     public void isFavoriteMusic() {
