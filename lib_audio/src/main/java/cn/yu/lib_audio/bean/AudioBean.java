@@ -50,69 +50,66 @@ public class AudioBean implements Serializable {
      */
     @NotNull
     public String albumPic;
-
-    @Generated(hash = 519536745)
+    /**
+     * 专辑描述
+     */
+    public String albumInfo;
+    @Generated(hash = 2085108027)
     public AudioBean(String id, @NotNull String pathUrl, @NotNull String albumName,
-                     @NotNull String authorName, @NotNull String musicName,
-                     @NotNull String albumPic) {
+            @NotNull String authorName, @NotNull String musicName,
+            @NotNull String albumPic, String albumInfo) {
         this.id = id;
         this.pathUrl = pathUrl;
         this.albumName = albumName;
         this.authorName = authorName;
         this.musicName = musicName;
         this.albumPic = albumPic;
+        this.albumInfo = albumInfo;
     }
-
     @Generated(hash = 1628963493)
     public AudioBean() {
     }
-
     public String getId() {
         return this.id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
-
     public String getPathUrl() {
         return this.pathUrl;
     }
-
     public void setPathUrl(String pathUrl) {
         this.pathUrl = pathUrl;
     }
-
     public String getAlbumName() {
         return this.albumName;
     }
-
     public void setAlbumName(String albumName) {
         this.albumName = albumName;
     }
-
     public String getAuthorName() {
         return this.authorName;
     }
-
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
     }
-
     public String getMusicName() {
         return this.musicName;
     }
-
     public void setMusicName(String musicName) {
         this.musicName = musicName;
     }
-
     public String getAlbumPic() {
         return this.albumPic;
     }
-
     public void setAlbumPic(String albumPic) {
         this.albumPic = albumPic;
+    }
+    public String getAlbumInfo() {
+        return this.albumInfo;
+    }
+    public void setAlbumInfo(String albumInfo) {
+        this.albumInfo = albumInfo;
     }
 
 

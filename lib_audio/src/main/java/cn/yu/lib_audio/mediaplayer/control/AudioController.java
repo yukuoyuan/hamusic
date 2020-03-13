@@ -154,13 +154,13 @@ public class AudioController {
              * 已经收藏的话移除收藏
              */
             MusicDapHelper.getInstance().removeFavoriteBean(getNowPlaying());
-            EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.CANCEL_FAVORITE, null));
+            EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.CANCEL_FAVORITE, new AudioBean()));
         } else {
             /*
              * 没有收藏的话进行收藏
              */
             MusicDapHelper.getInstance().addFavoriteMusic(getNowPlaying());
-            EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.FAVORITE, null));
+            EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.FAVORITE, new AudioBean()));
         }
 
     }
@@ -327,6 +327,7 @@ public class AudioController {
      */
     public void setPlayMode(PlayMode playMode) {
         mPlayMode = playMode;
+        EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.PLAY_MODE, playMode));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

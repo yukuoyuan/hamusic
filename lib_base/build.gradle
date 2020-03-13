@@ -23,5 +23,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation this.rootProject.depsLibs.appcompat
     //注解
-    api this.rootProject.depsLibs.butterknife
+    compileOnly this.rootProject.depsLibs.butterknife
+    //占位主工程的eventbus库
+    compileOnly this.rootProject.depsLibs.eventbus
 }

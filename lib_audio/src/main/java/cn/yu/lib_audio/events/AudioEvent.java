@@ -2,6 +2,7 @@ package cn.yu.lib_audio.events;
 
 
 import cn.yu.lib_audio.bean.AudioBean;
+import cn.yu.lib_audio.mediaplayer.control.AudioController;
 
 /**
  * Created on 2020-03-05
@@ -49,7 +50,11 @@ public class AudioEvent {
         /**
          * 进度
          */
-        PROGRESS
+        PROGRESS,
+        /**
+         * 播放模式
+         */
+        PLAY_MODE
     }
 
     /**
@@ -68,6 +73,10 @@ public class AudioEvent {
      * 总的时长
      */
     private int duration;
+    /**
+     * 播放模式
+     */
+    private AudioController.PlayMode playMode;
 
     public AudioEvent(AudioEventStatus status, AudioBean audioBean) {
         this.status = status;
@@ -78,6 +87,11 @@ public class AudioEvent {
         this.status = status;
         this.currentPosition = currentPosition;
         this.duration = duration;
+    }
+
+    public AudioEvent(AudioEventStatus status, AudioController.PlayMode playMode) {
+        this.status = status;
+        this.playMode = playMode;
     }
 
     /**
@@ -96,5 +110,23 @@ public class AudioEvent {
      */
     public AudioBean getAudioBean() {
         return audioBean;
+    }
+
+    /**
+     * 获取当前的进度
+     *
+     * @return 当前的进度
+     */
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    /**
+     * 获取总的长度
+     *
+     * @return 长度
+     */
+    public int getDuration() {
+        return duration;
     }
 }

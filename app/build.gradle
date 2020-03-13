@@ -29,6 +29,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation this.rootProject.depsLibs.appcompat
     implementation this.rootProject.depsLibs.constraintlayout
+    //注解框架 butterknife
+    implementation this.rootProject.depsLibs.butterknife
     annotationProcessor this.rootProject.depsLibs.butterknifecompiler
     //数据库greendao
     implementation this.rootProject.depsLibs.greendao

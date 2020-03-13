@@ -8,7 +8,17 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import cn.yu.lib_audio.R;
+import cn.yu.lib_audio.bean.AudioBean;
+import cn.yu.lib_audio.bean.FavoriteBean;
+import cn.yu.lib_audio.dbs.MusicDapHelper;
+import cn.yu.lib_audio.events.AudioEvent;
+import cn.yu.lib_audio.mediaplayer.control.AudioController;
+import cn.yu.lib_audio.mediaplayer.core.CustomMediaPlayer;
 import cn.yu.lib_base.activitys.BaseActivity;
 
 /**
@@ -25,13 +35,10 @@ public class MusicPlayerActivity extends BaseActivity implements View.OnClickLis
     private ImageView ivMusicPlayerActivityTitleRightShare;
     private TextView tvMusicPlayerActivityTitleDescription;
     private TextView tvMusicPlayerActivityTitleAuthorName;
-    private LinearLayout llMusicPlayerActivityBottomTop;
     private ImageView ivMusicPlayerActivityBottomTopFavourite;
-    private ConstraintLayout clMusicPlayerActivityBottomCenter;
     private TextView tvMusicPlayerActivityBottomCenterStartTime;
     private TextView tvMusicPlayerActivityBottomCenterEndTime;
     private SeekBar sbMusicPlayerActivityBottomCenterProgress;
-    private ConstraintLayout clMusicPlayerActivityBottomBottom;
     private ImageView ivMusicPlayerActivityBottomBottomPlayMode;
     private ImageView ivMusicPlayerActivityBottomBottomPrevious;
     private ImageView ivMusicPlayerActivityBottomBottomPlayPause;
@@ -48,10 +55,76 @@ public class MusicPlayerActivity extends BaseActivity implements View.OnClickLis
          * 初始化监听
          */
         initListener();
+        /*
+         * 初始化数据到界面
+         */
+        initData2View();
+    }
+
+    private void initData2View() {
+        AudioBean audioBean = AudioController.getInstance().getNowPlaying();
+        /*
+         * 专辑描述信息
+         */
+        tvMusicPlayerActivityTitleDescription.setText(audioBean.albumInfo);
+        /*
+         * 作者名字
+         */
+        tvMusicPlayerActivityTitleAuthorName.setText(audioBean.authorName);
+        /*
+         * 是否收藏
+         */
+        FavoriteBean favoriteBean = MusicDapHelper.getInstance().searchFavoriteBean(audioBean);
+        showIsFavouriteView(favoriteBean != null);
+        /*
+         * 展示 播放方式
+         */
+        showPlayModeView();
+    }
+
+    /**
+     * 设置播放模式的标志
+     */
+    private void showPlayModeView() {
+        AudioController.PlayMode playMode = AudioController.getInstance().getPlayMode();
+        switch (playMode) {
+            case LOOP:
+                /*
+                 * 循环列表
+                 */
+                ivMusicPlayerActivityBottomBottomPlayMode.setImageResource(R.drawable.icon_music_player_play_mode_cycle);
+                break;
+            case RANDOM:
+                /*
+                 * 随机
+                 */
+                ivMusicPlayerActivityBottomBottomPlayMode.setImageResource(R.drawable.icon_music_player_play_mode_random);
+                break;
+            case REPEAT:
+                /*
+                 * 单曲循环
+                 */
+                ivMusicPlayerActivityBottomBottomPlayMode.setImageResource(R.drawable.icon_music_player_play_mode_once);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected boolean isUsedEventBus() {
+        return true;
     }
 
     private void initListener() {
         ivMusicPlayerActivityTitleLeftBack.setOnClickListener(this);
+        ivMusicPlayerActivityTitleRightShare.setOnClickListener(this);
+        ivMusicPlayerActivityBottomTopFavourite.setOnClickListener(this);
+        ivMusicPlayerActivityBottomBottomPlayMode.setOnClickListener(this);
+        ivMusicPlayerActivityBottomBottomPrevious.setOnClickListener(this);
+        ivMusicPlayerActivityBottomBottomPlayPause.setOnClickListener(this);
+        ivMusicPlayerActivityBottomBottomNext.setOnClickListener(this);
+        ivMusicPlayerActivityBottomBottomList.setOnClickListener(this);
     }
 
     @Override
@@ -59,19 +132,99 @@ public class MusicPlayerActivity extends BaseActivity implements View.OnClickLis
         return R.layout.activity_music_player;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onAudioEvent(AudioEvent audioEvent) {
+        AudioEvent.AudioEventStatus audioEventStatus = audioEvent.getStatus();
+        switch (audioEventStatus) {
+            case LOAD:
+                initData2View();
+                break;
+            case PAUSE:
+                /*
+                 * 展示暂停的状态
+                 */
+                showPlayOrPauseView(false);
+                break;
+            case START:
+                /*
+                 * 展示播放的状态
+                 */
+                showPlayOrPauseView(true);
+                break;
+            case FAVORITE:
+                /*
+                 * 收藏
+                 */
+                showIsFavouriteView(true);
+                break;
+            case PROGRESS:
+                /*
+                 * 改变进度
+                 */
+                setTimeData2View(audioEvent.getCurrentPosition(), audioEvent.getDuration());
+                break;
+            case CANCEL_FAVORITE:
+                /*
+                 * 取消收藏
+                 */
+                showIsFavouriteView(false);
+                break;
+            case PLAY_MODE:
+                /*
+                 * 播放模式
+                 */
+                showPlayModeView();
+                break;
+            default:
+                break;
+        }
+    }
 
+    /**
+     * 展示开始或者暂停的按钮
+     *
+     * @param isPlay 是否播放
+     */
+    private void showPlayOrPauseView(boolean isPlay) {
+        if (isPlay) {
+            ivMusicPlayerActivityBottomBottomPlayPause.setImageResource(R.drawable.icon_music_player_play);
+        } else {
+            ivMusicPlayerActivityBottomBottomPlayPause.setImageResource(R.drawable.icon_music_player_pause);
+        }
+    }
+
+    /**
+     * 设置时间数据到界面
+     *
+     * @param currentPosition 选择的时长
+     * @param duration        总的时长
+     */
+    private void setTimeData2View(int currentPosition, int duration) {
+        sbMusicPlayerActivityBottomCenterProgress.setProgress(currentPosition);
+        sbMusicPlayerActivityBottomCenterProgress.setMax(duration);
+        /*
+         * 设置播放状态
+         */
+        CustomMediaPlayer.Status status = AudioController.getInstance().getStatus();
+        if (status == CustomMediaPlayer.Status.PAUSE) {
+            showPlayOrPauseView(false);
+        } else {
+            showPlayOrPauseView(true);
+        }
+    }
+
+    /**
+     * 初始化控件
+     */
     private void initView() {
         ivMusicPlayerActivityTitleLeftBack = findViewById(R.id.iv_music_player_activity_title_left_back);
         ivMusicPlayerActivityTitleRightShare = findViewById(R.id.iv_music_player_activity_title_right_share);
         tvMusicPlayerActivityTitleDescription = findViewById(R.id.tv_music_player_activity_title_description);
         tvMusicPlayerActivityTitleAuthorName = findViewById(R.id.tv_music_player_activity_title_author_name);
-        llMusicPlayerActivityBottomTop = findViewById(R.id.ll_music_player_activity_bottom_top);
         ivMusicPlayerActivityBottomTopFavourite = findViewById(R.id.iv_music_player_activity_bottom_top_favourite);
-        clMusicPlayerActivityBottomCenter = findViewById(R.id.cl_music_player_activity_bottom_center);
         tvMusicPlayerActivityBottomCenterStartTime = findViewById(R.id.tv_music_player_activity_bottom_center_start_time);
         tvMusicPlayerActivityBottomCenterEndTime = findViewById(R.id.tv_music_player_activity_bottom_center_end_time);
         sbMusicPlayerActivityBottomCenterProgress = findViewById(R.id.sb_music_player_activity_bottom_center_progress);
-        clMusicPlayerActivityBottomBottom = findViewById(R.id.cl_music_player_activity_bottom_bottom);
         ivMusicPlayerActivityBottomBottomPlayMode = findViewById(R.id.iv_music_player_activity_bottom_bottom_play_mode);
         ivMusicPlayerActivityBottomBottomPrevious = findViewById(R.id.iv_music_player_activity_bottom_bottom_previous);
         ivMusicPlayerActivityBottomBottomPlayPause = findViewById(R.id.iv_music_player_activity_bottom_bottom_play_pause);
@@ -88,12 +241,68 @@ public class MusicPlayerActivity extends BaseActivity implements View.OnClickLis
              */
             onBackPressed();
         } else if (id == R.id.iv_music_player_activity_title_right_share) {
+
         } else if (id == R.id.iv_music_player_activity_bottom_top_favourite) {
+            /*
+             * 是否收藏音乐
+             */
+            AudioController.getInstance().isFavoriteMusic();
         } else if (id == R.id.iv_music_player_activity_bottom_bottom_play_mode) {
+            /*
+             * 改变播放模式
+             */
+            changePlayMode();
         } else if (id == R.id.iv_music_player_activity_bottom_bottom_previous) {
+            /*
+             * 上一曲
+             */
+            AudioController.getInstance().previousMusic();
+
         } else if (id == R.id.iv_music_player_activity_bottom_bottom_play_pause) {
+            /*
+             *开始或者暂停
+             */
+            AudioController.getInstance().playOrPause();
         } else if (id == R.id.iv_music_player_activity_bottom_bottom_next) {
+            /*
+             *下一曲
+             */
+            AudioController.getInstance().nextMusic();
         } else if (id == R.id.iv_music_player_activity_bottom_bottom_list) {
+        }
+    }
+
+    /**
+     * 改变播放模式
+     */
+    private void changePlayMode() {
+        AudioController.PlayMode playMode = AudioController.getInstance().getPlayMode();
+        //切换播放模式
+        switch (playMode) {
+            case LOOP:
+                AudioController.getInstance().setPlayMode(AudioController.PlayMode.RANDOM);
+                break;
+            case RANDOM:
+                AudioController.getInstance().setPlayMode(AudioController.PlayMode.REPEAT);
+                break;
+            case REPEAT:
+                AudioController.getInstance().setPlayMode(AudioController.PlayMode.LOOP);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 是否收藏
+     *
+     * @param isFavourite 是否收藏
+     */
+    private void showIsFavouriteView(boolean isFavourite) {
+        if (isFavourite) {
+            ivMusicPlayerActivityBottomTopFavourite.setImageResource(R.drawable.icon_music_player_favourite);
+        } else {
+            ivMusicPlayerActivityBottomTopFavourite.setImageResource(R.drawable.icon_music_player_unfavourite);
         }
     }
 }
