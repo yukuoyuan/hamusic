@@ -2,9 +2,15 @@
     package="cn.yu.lib_audio">
 
     <application>
+        <!--        音乐服务,用来和通知绑定-->
         <service
             android:name=".servicess.MusicService"
             android:enabled="true"
             android:exported="false" />
+        <!--        播放详情界面-->
+        <activity
+            android:name=".activitys.MusicPlayerActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
     </application>
 </manifest>
