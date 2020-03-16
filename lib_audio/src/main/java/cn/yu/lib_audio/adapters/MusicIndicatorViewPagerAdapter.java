@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import cn.yu.lib_audio.R;
 import cn.yu.lib_audio.bean.AudioBean;
 import cn.yu.lib_audio.mediaplayer.control.AudioController;
-import cn.yu.lib_audio.utils.ListUtils;
+import cn.yu.lib_base.utils.ListUtils;
 import cn.yu.lib_imageloader.ImageLoadManger;
 
 /**
@@ -46,7 +46,7 @@ public class MusicIndicatorViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        if (ListUtils.getInstance().isEmoty(mAudioBeans)) {
+        if (ListUtils.getInstance().isEmpty(mAudioBeans)) {
             return 0;
         }
         return mAudioBeans.size();
@@ -78,7 +78,6 @@ public class MusicIndicatorViewPagerAdapter extends PagerAdapter {
      * @return 动画
      */
     private ObjectAnimator createAnimator(ImageView ivDiyViewMusicIndicatorViewBg) {
-        ivDiyViewMusicIndicatorViewBg.setRotation(0);
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(ivDiyViewMusicIndicatorViewBg, View.ROTATION.getName(), 0, 360);
         /*
          * 时间

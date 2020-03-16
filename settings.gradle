@@ -1,4 +1,5 @@
-include ':app', ':lib_base',
+include ':app',
+        ':lib_base',
         ':lib_common_ui',
         ':lib_audio',
         ':lib_video',

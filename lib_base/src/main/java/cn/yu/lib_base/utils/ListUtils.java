@@ -1,4 +1,4 @@
-package cn.yu.lib_audio.utils;
+package cn.yu.lib_base.utils;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class ListUtils {
      * @param list 列表
      * @return 是否为空
      */
-    public boolean isEmoty(List<?> list) {
+    public boolean isEmpty(List<?> list) {
         if (list != null && list.size() != 0) {
             return false;
         }
@@ -44,7 +44,7 @@ public class ListUtils {
      * @return 是否有用
      */
     public boolean indexIsEffective(int index, List<?> list) {
-        if (isEmoty(list)) {
+        if (isEmpty(list)) {
             return false;
         }
         if (index >= 0 && index < list.size()) {

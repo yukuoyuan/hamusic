@@ -21,28 +21,67 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment {
 
     private Unbinder mUnbinder;
+    /**
+     * 根布局
+     */
+    public View mView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayout(), null);
-        mUnbinder = ButterKnife.bind(this, view);
-        return view;
+        mView = inflater.inflate(getLayout(), null);
+        if (isUsedButterKnife()) {
+            mUnbinder = ButterKnife.bind(this, mView);
+        }
+        return mView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         /*
+         * 初始化控件
+         */
+        initView();
+        /*
+         * 初始化监听
+         */
+        initListener();
+        /*
          * 初始化数据
          */
         initData(getArguments());
     }
 
+    /**
+     * 是否使用butterknife注解框架
+     *
+     * @return 默认使用
+     */
+    protected boolean isUsedButterKnife() {
+        return true;
+    }
+
+    /**
+     * 初始化监听
+     */
+    protected void initListener() {
+
+    }
+
+    /**
+     * 初始化控件
+     */
+    protected void initView() {
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mUnbinder.unbind();
+        if (isUsedButterKnife()) {
+            mUnbinder.unbind();
+        }
     }
 
     /**

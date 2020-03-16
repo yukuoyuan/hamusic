@@ -28,7 +28,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation this.rootProject.depsLibs.appcompat
+    //新的布局(viewgroup)库
     implementation this.rootProject.depsLibs.constraintlayout
+    //列表库
+    implementation this.rootProject.depsLibs.recyclerview
     //注解框架 butterknife
     implementation this.rootProject.depsLibs.butterknife
     annotationProcessor this.rootProject.depsLibs.butterknifecompiler
@@ -47,4 +50,5 @@ dependencies {
     implementation project(':lib_imageloader')
     //音乐播放库
     implementation project(':lib_audio')
+
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MultiImageViewLayout">
+        <!--        横向的最大的个数-->
+        <attr name="rowMaxCount" format="integer" />
+        <!--        横向的间隙-->
+        <attr name="rowSpaceWidth" format="dimension" />
+        <!--        竖向的间隙-->
+        <attr name="columnSpaceWidth" format="dimension" />
+
+    </declare-styleable>
+
+</resources>

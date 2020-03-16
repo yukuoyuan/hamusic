@@ -26,4 +26,7 @@ dependencies {
     compileOnly this.rootProject.depsLibs.butterknife
     //占位主工程的eventbus库
     compileOnly this.rootProject.depsLibs.eventbus
+    //占位主工程的列表库
+    compileOnly this.rootProject.depsLibs.recyclerview
+
 }

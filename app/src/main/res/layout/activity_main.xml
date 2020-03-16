@@ -135,8 +135,6 @@
                             android:textSize="15sp" />
                     </LinearLayout>
                 </RelativeLayout>
-
-
             </LinearLayout>
         </ScrollView>
 

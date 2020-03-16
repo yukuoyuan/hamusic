@@ -5,9 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import cn.yu.hamusic.discovery.fragments.DiscoveryFragment;
-import cn.yu.hamusic.friends.fragments.FriendsFragment;
 import cn.yu.hamusic.home.beans.CHANNEL;
 import cn.yu.hamusic.home.fragments.HomeFragment;
+import cn.yu.hamusic.friend.fragments.FriendFragment;
 
 /**
  * Created on 2020-02-26
@@ -31,7 +31,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
             case CHANNEL.DISCORY_ID:
                 return DiscoveryFragment.newInstance();
             case CHANNEL.FRIEND_ID:
-                return FriendsFragment.newInstance();
+                return FriendFragment.newInstance();
             case CHANNEL.MINE_ID:
             default:
                 return HomeFragment.newInstance();
