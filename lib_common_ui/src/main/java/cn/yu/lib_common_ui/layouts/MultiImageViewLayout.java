@@ -2,10 +2,10 @@ package cn.yu.lib_common_ui.layouts;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -217,6 +217,10 @@ public class MultiImageViewLayout extends LinearLayout {
             int width = measureWidth(widthMeasureSpec);
             if (width > 0) {
                 layoutWidth = width;
+                ViewGroup.MarginLayoutParams layoutParams = (MarginLayoutParams) getLayoutParams();
+                int leftMargin = layoutParams.leftMargin;
+                int rightMargin = layoutParams.rightMargin;
+                layoutWidth = layoutWidth - leftMargin - rightMargin;
                 initData2View();
             }
         }
