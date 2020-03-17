@@ -24,7 +24,10 @@ ext {
             glidecompiler      : '4.9.0',
             greendao           : '3.2.2',
             eventbus           : '3.1.1',
-            recyclerview       : '28.0.0'
+            recyclerview       : '28.0.0',
+            arouterapi         : '1.5.0',
+            aroutercompiler    : '1.2.2'
+
     ]
     //定义一些依赖包
     depsLibs = [
@@ -39,6 +42,9 @@ ext {
             glidecompiler      : "com.github.bumptech.glide:compiler:${depsVersion.glidecompiler}",
             greendao           : "org.greenrobot:greendao:${depsVersion.greendao}",
             eventbus           : "org.greenrobot:eventbus:${depsVersion.eventbus}",
-            recyclerview       : "com.android.support:recyclerview-v7:${depsVersion.recyclerview}"
+            recyclerview       : "com.android.support:recyclerview-v7:${depsVersion.recyclerview}",
+            arouterapi         : "com.alibaba:arouter-api:${depsVersion.arouterapi}",
+            aroutercompiler    : "com.alibaba:arouter-compiler:${depsVersion.aroutercompiler}"
+
     ]
 }

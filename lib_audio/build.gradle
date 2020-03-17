@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'org.greenrobot.greendao'
-
+apply plugin: 'com.alibaba.arouter'
 android {
     compileSdkVersion this.rootProject.android.compileSdkVersion
     buildToolsVersion this.rootProject.android.buildToolsVersion
@@ -10,6 +10,11 @@ android {
         targetSdkVersion this.rootProject.android.targetSdkVersion
         versionCode this.rootProject.android.versionCode
         versionName this.rootProject.android.versionName
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -28,6 +33,8 @@ greendao {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation this.rootProject.depsLibs.appcompat
+    //arouter库
+    compileOnly this.rootProject.depsLibs.arouterapi
     //占位主工程的数据库greendao
     compileOnly this.rootProject.depsLibs.greendao
     //占位主工程的eventbus库
