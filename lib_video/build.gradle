@@ -22,5 +22,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation this.rootProject.depsLibs.appcompat
+    //占位主工程的constraintlayout
+    compileOnly this.rootProject.depsLibs.constraintlayout
 
 }
