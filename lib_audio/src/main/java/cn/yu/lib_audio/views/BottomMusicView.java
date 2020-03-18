@@ -10,6 +10,8 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -19,6 +21,7 @@ import cn.yu.lib_audio.activitys.MusicPlayerActivity;
 import cn.yu.lib_audio.bean.AudioBean;
 import cn.yu.lib_audio.events.AudioEvent;
 import cn.yu.lib_audio.mediaplayer.control.AudioController;
+import cn.yu.lib_base.config.Constants;
 import cn.yu.lib_imageloader.ImageLoadManger;
 
 
@@ -267,7 +270,8 @@ public class BottomMusicView extends ConstraintLayout implements View.OnClickLis
             /*
              * 跳转详情界面
              */
-            getContext().startActivity(new Intent(getContext(), MusicPlayerActivity.class));
+            ARouter.getInstance().build(Constants.Router.MusicPlayerActivityPath).navigation();
+//            getContext().startActivity(new Intent(getContext(), MusicPlayerActivity.class));
         }
     }
 }

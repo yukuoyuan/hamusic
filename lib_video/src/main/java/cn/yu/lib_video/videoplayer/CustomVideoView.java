@@ -39,6 +39,32 @@ public class CustomVideoView extends RelativeLayout implements TextureView.Surfa
      */
     private MediaPlayer mMediaPlayer;
 
+    /**
+     * 视频播放的各种状态
+     */
+    public enum VideoPlayStatus {
+        /**
+         * 播放前的状态
+         */
+        IDLE,
+        /**
+         * 加载状态
+         */
+        LOAD,
+        /**
+         * 开始装填
+         */
+        START,
+        /**
+         * 暂停状态
+         */
+        PAUSE,
+        /**
+         * 重新开始播放
+         */
+        RESUME
+    }
+
     public CustomVideoView(Context context) {
         super(context);
     }

@@ -35,6 +35,7 @@ dependencies {
     implementation this.rootProject.depsLibs.appcompat
     //arouter库
     compileOnly this.rootProject.depsLibs.arouterapi
+    annotationProcessor rootProject.depsLibs.aroutercompiler
     //占位主工程的数据库greendao
     compileOnly this.rootProject.depsLibs.greendao
     //占位主工程的eventbus库

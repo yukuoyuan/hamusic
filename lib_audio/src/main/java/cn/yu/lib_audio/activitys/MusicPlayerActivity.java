@@ -10,6 +10,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -30,6 +32,7 @@ import cn.yu.lib_base.activitys.BaseActivity;
  * @author yukuoyuan
  * @link github https://github.com/yukuoyuan
  */
+@Route(path = "/audio/music_play_activity")
 public class MusicPlayerActivity extends BaseActivity implements View.OnClickListener {
 
 
