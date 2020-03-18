@@ -67,10 +67,7 @@ public class SpreadView extends View {
      * 距离的间距
      */
     private int mSpreadSpace;
-    /**
-     * 渐变的间距
-     */
-    private int mSpreadAlphaSpace = 5;
+
 
     public SpreadView(Context context) {
         this(context, null);
@@ -138,7 +135,7 @@ public class SpreadView extends View {
             /*
              *扩散的距离
              */
-            mSpreadCount = typedArray.getInt(R.styleable.SpreadView_spreadCount, 0);
+            mSpreadSpace = typedArray.getInt(R.styleable.SpreadView_spreadSpace, 0);
 
             typedArray.recycle();
         } catch (Exception e) {
@@ -180,11 +177,6 @@ public class SpreadView extends View {
          */
         mSpreadPaint.setAlpha(255);
         mSpreadPaint.setColor(mCenterCircleColor);
-        /*
-         * 计算出扩散的距离和渐变扩散的度
-         */
-        mSpreadSpace = (int) (mMaxCircleRadius / mSpreadCount);
-//        mSpreadAlphaSpace = 255 / mSpreadCount;
     }
 
     @Override
@@ -211,10 +203,10 @@ public class SpreadView extends View {
             //绘制扩散的圆
             canvas.drawCircle(centerX, centerY, mCenterCircleRadius + width, mSpreadPaint);
             /*
-             * 每次扩散圆距离递增,透明度递减
+             * 每次扩散圆距离递增,透明度递减(下次绘制的时候就会往外扩散了)
              */
-            if (alpha > 0 && width < mMaxCircleRadius * 3) {
-                alpha = alpha - mSpreadAlphaSpace > 0 ? alpha - mSpreadAlphaSpace : 1;
+            if (alpha > 0 && width < mMaxCircleRadius * 4) {
+                alpha = alpha - mSpreadSpace > 0 ? alpha - mSpreadSpace : 1;
                 alphas.set(i, alpha);
                 spreadRadius.set(i, width + mSpreadSpace);
             }
@@ -235,8 +227,7 @@ public class SpreadView extends View {
         /*
          * 如果增加了八个圆,就要移除第一个
          */
-        if (spreadRadius.size() > 8) {
-            Log.d("SpreadView", "移除");
+        if (spreadRadius.size() > 4) {
             spreadRadius.remove(0);
             alphas.remove(0);
         }

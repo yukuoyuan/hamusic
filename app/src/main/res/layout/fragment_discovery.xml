@@ -10,6 +10,6 @@
         app:centerCircleColor="@android:color/holo_red_dark"
         app:centerCircleRadius="30dp"
         app:maxCircleRadius="40dp"
-        app:spreadCount="20"
-        app:spreadDelayTime="90" />
+        app:spreadDelayTime="90"
+        app:spreadSpace="5" />
 </android.support.constraint.ConstraintLayout>

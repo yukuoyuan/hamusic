@@ -19,8 +19,8 @@
         <attr name="maxCircleRadius" format="dimension" />
         <!--扩散延迟间隔-->
         <attr name="spreadDelayTime" format="integer" />
-        <!--        扩散的数量-->
-        <attr name="spreadCount" format="integer" />
+        <!--        扩散的距离-->
+        <attr name="spreadSpace" format="integer" />
 
     </declare-styleable>
 
