@@ -59,5 +59,7 @@ dependencies {
     implementation project(':lib_imageloader')
     //音乐播放库
     implementation project(':lib_audio')
+    //过度界面模块
+    implementation project(':lib_splash')
 
 }
