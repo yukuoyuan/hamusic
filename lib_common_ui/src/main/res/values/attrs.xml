@@ -10,5 +10,16 @@
         <attr name="columnSpaceWidth" format="dimension" />
 
     </declare-styleable>
+    <declare-styleable name="SpreadView">
+        <!--        中心圆的颜色-->
+        <attr name="centerCircleColor" format="color" />
+        <!--        中心圆的半径-->
+        <attr name="centerCircleRadius" format="dimension" />
+        <!--扩散最大半径-->
+        <attr name="maxCircleRadius" format="dimension" />
+        <!--扩散延迟间隔-->
+        <attr name="spreadDealyTime" format="integer" />
+
+    </declare-styleable>
 
 </resources>

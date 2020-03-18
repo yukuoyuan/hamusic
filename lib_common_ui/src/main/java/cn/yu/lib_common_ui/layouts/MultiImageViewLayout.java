@@ -222,7 +222,10 @@ public class MultiImageViewLayout extends LinearLayout {
              * 竖向的间隙
              */
             columnSpaceWidth = (int) typedArray.getDimension(R.styleable.MultiImageViewLayout_columnSpaceWidth, columnSpaceWidth);
-            Log.d("自定义view", "初始化属性");
+            /*
+             * 记得释放
+             */
+            typedArray.recycle();
         } catch (Exception e) {
             e.printStackTrace();
         }

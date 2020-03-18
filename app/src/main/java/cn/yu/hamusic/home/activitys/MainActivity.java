@@ -34,7 +34,7 @@ import cn.yu.hamusic.home.iviews.IMainView;
 import cn.yu.lib_audio.AudioHelper;
 import cn.yu.lib_audio.bean.AudioBean;
 import cn.yu.lib_base.activitys.BaseActivity;
-import cn.yu.lib_common_ui.indicators.ScaleTransitionPagerTitleView;
+import cn.yu.lib_common_ui.views.ScaleTransitionPagerTitleView;
 
 
 /**
