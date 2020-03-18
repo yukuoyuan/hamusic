@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.alibaba.arouter'
 
 android {
     compileSdkVersion this.rootProject.android.compileSdkVersion
@@ -9,6 +10,11 @@ android {
         targetSdkVersion this.rootProject.android.targetSdkVersion
         versionCode this.rootProject.android.versionCode
         versionName this.rootProject.android.versionName
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
     buildTypes {
         release {
@@ -26,4 +32,7 @@ dependencies {
     compileOnly project(':lib_base')
     //占位主工程的布局控件
     compileOnly this.rootProject.depsLibs.constraintlayout
+    //arouter库
+    compileOnly this.rootProject.depsLibs.arouterapi
+    annotationProcessor rootProject.depsLibs.aroutercompiler
 }

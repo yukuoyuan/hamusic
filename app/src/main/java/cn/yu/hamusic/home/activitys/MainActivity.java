@@ -12,6 +12,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
@@ -36,9 +38,12 @@ import cn.yu.lib_common_ui.indicators.ScaleTransitionPagerTitleView;
 
 
 /**
+ * 这是一个首页
+ *
  * @author yukuoyuan
  * @date
  */
+@Route(path = "/app/main/main_activity")
 public class MainActivity extends BaseActivity implements IMainView {
 
 

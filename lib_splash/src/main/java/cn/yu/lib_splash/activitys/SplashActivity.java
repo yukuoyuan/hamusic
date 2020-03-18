@@ -1,8 +1,12 @@
 package cn.yu.lib_splash.activitys;
 
 import android.os.Bundle;
+import android.os.Handler;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import cn.yu.lib_base.activitys.BaseActivity;
+import cn.yu.lib_base.config.Constants;
 import cn.yu.lib_splash.R;
 
 /**
@@ -16,7 +20,15 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initData(Bundle bundle) {
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                /*
+                 * 跳转首页
+                 */
+                ARouter.getInstance().build(Constants.Router.MainActivity).navigation();
+            }
+        }, 3000L);
     }
 
     @Override
