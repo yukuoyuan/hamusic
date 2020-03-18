@@ -11,5 +11,5 @@
         app:centerCircleRadius="30dp"
         app:maxCircleRadius="40dp"
         app:spreadCount="20"
-        app:spreadDelayTime="60" />
+        app:spreadDelayTime="90" />
 </android.support.constraint.ConstraintLayout>

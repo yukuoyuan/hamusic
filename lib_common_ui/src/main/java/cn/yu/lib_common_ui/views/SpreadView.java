@@ -184,6 +184,7 @@ public class SpreadView extends View {
          * 计算出扩散的距离和渐变扩散的度
          */
         mSpreadSpace = (int) (mMaxCircleRadius / mSpreadCount);
+//        mSpreadAlphaSpace = 255 / mSpreadCount;
     }
 
     @Override
@@ -212,7 +213,7 @@ public class SpreadView extends View {
             /*
              * 每次扩散圆距离递增,透明度递减
              */
-            if (alpha > 0 && width < (mMaxCircleRadius * 3)) {
+            if (alpha > 0 && width < mMaxCircleRadius * 3) {
                 alpha = alpha - mSpreadAlphaSpace > 0 ? alpha - mSpreadAlphaSpace : 1;
                 alphas.set(i, alpha);
                 spreadRadius.set(i, width + mSpreadSpace);
@@ -234,7 +235,7 @@ public class SpreadView extends View {
         /*
          * 如果增加了八个圆,就要移除第一个
          */
-        if (spreadRadius.size() > mSpreadCount) {
+        if (spreadRadius.size() > 8) {
             Log.d("SpreadView", "移除");
             spreadRadius.remove(0);
             alphas.remove(0);
