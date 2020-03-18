@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,6 +48,10 @@ public class MultiImageViewLayout extends LinearLayout {
      * 每个imageView的宽度和高度
      */
     public int imgLayoutWidth = 0;
+    /**
+     * 条目点击监听
+     */
+    private OnItemClickListener onItemClickListener;
 
     public MultiImageViewLayout(Context context) {
         super(context);
@@ -99,7 +104,7 @@ public class MultiImageViewLayout extends LinearLayout {
              */
             for (int i = 0; i < imgList.size(); i++) {
                 LinearLayout linearLayout = createRowLinearLayout();
-                ImageView imageView = createImageView();
+                ImageView imageView = createImageView(i);
                 /*
                  *如果不是第一个,也不是最后一个的话
                  */
@@ -141,7 +146,8 @@ public class MultiImageViewLayout extends LinearLayout {
                 }
             }
             for (int j = 0; j < rowCount; j++) {
-                ImageView imageView = createImageView();
+                int position = i * rowMaxCount + j;
+                ImageView imageView = createImageView(position);
                 /*
                  *如果不是第一个,也不是最后一个的话
                  */
@@ -151,7 +157,6 @@ public class MultiImageViewLayout extends LinearLayout {
                     Log.d("添加控件1", String.valueOf(rowSpaceWidth));
                     imageView.setLayoutParams(layoutParams);
                 }
-                ImageLoadManger.getInstance().loadImage2ImageView(imageView, imgList.get(i * rowMaxCount + j));
                 linearLayout.addView(imageView);
                 Log.d("添加控件2", String.valueOf(i * rowMaxCount + j));
             }
@@ -168,18 +173,31 @@ public class MultiImageViewLayout extends LinearLayout {
         linearLayout.setOrientation(HORIZONTAL);
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         linearLayout.setLayoutParams(layoutParams);
+
         return linearLayout;
     }
 
     /**
      * 创建一个imageView
      *
+     * @param position 列表索引
      * @return imageView
      */
-    private ImageView createImageView() {
+    private ImageView createImageView(final int position) {
         ImageView imageView = new ImageView(getContext());
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(imgLayoutWidth, imgLayoutWidth);
         imageView.setLayoutParams(layoutParams);
+        String imgUrl = imgList.get(position);
+        imageView.setId(imgUrl.hashCode());
+        ImageLoadManger.getInstance().loadImage2ImageView(imageView, imgUrl);
+        imageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(position);
+                }
+            }
+        });
         return imageView;
     }
 
@@ -263,5 +281,26 @@ public class MultiImageViewLayout extends LinearLayout {
 
         }
         return result;
+    }
+
+    /**
+     * 设置条目点击监听
+     *
+     * @param onItemClickListener 设置监听
+     */
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    /**
+     * 条目点击事件回调
+     */
+    public interface OnItemClickListener {
+        /**
+         * 条目点击的回调方法
+         *
+         * @param position 索引
+         */
+        void onItemClick(int position);
     }
 }
