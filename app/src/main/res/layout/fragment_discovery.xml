@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <cn.yu.lib_common_ui.views.SpreadView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:centerCircleColor="@android:color/holo_red_dark"
+        app:centerCircleRadius="30dp"
+        app:maxCircleRadius="40dp"
+        app:spreadCount="20"
+        app:spreadDelayTime="60" />
 </android.support.constraint.ConstraintLayout>
