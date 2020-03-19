@@ -1,8 +1,9 @@
 package cn.yu.hamusic.home.adapters;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import cn.yu.hamusic.discovery.fragments.DiscoveryFragment;
 import cn.yu.hamusic.home.beans.CHANNEL;

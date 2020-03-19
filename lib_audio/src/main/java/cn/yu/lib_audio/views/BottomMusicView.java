@@ -2,13 +2,14 @@ package cn.yu.lib_audio.views;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
+
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
@@ -17,7 +18,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import cn.yu.lib_audio.R;
-import cn.yu.lib_audio.activitys.MusicPlayerActivity;
 import cn.yu.lib_audio.bean.AudioBean;
 import cn.yu.lib_audio.events.AudioEvent;
 import cn.yu.lib_audio.mediaplayer.control.AudioController;

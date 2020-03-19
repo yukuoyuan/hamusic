@@ -2,10 +2,11 @@ package cn.yu.lib_audio.views;
 
 import android.animation.Animator;
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

@@ -1,8 +1,9 @@
 package cn.yu.hamusic.friend.fragments;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
