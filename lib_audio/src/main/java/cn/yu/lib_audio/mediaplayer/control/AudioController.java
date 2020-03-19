@@ -14,7 +14,7 @@ import cn.yu.lib_audio.dbs.MusicDapHelper;
 import cn.yu.lib_audio.events.AudioEvent;
 import cn.yu.lib_audio.mediaplayer.core.AudioPlayer;
 import cn.yu.lib_audio.mediaplayer.core.CustomMediaPlayer;
-import cn.yu.lib_audio.utils.ListUtils;
+import cn.yu.lib_base.utils.ListUtils;
 
 /**
  * Created on 2020-03-05
@@ -99,7 +99,7 @@ public class AudioController {
         /*
          * 保证数据
          */
-        if (!ListUtils.getInstance().isEmoty(mAudioBeanArrayList) && ListUtils.getInstance().indexIsEffective(queueIndex, mAudioBeanArrayList)) {
+        if (!ListUtils.getInstance().isEmpty(mAudioBeanArrayList) && ListUtils.getInstance().indexIsEffective(queueIndex, mAudioBeanArrayList)) {
             return mAudioBeanArrayList.get(queueIndex);
         } else {
             Log.e("音乐控制器", "实在是无法得到");
@@ -146,6 +146,28 @@ public class AudioController {
     }
 
     /**
+     * 指定播放某一首歌曲
+     *
+     * @param mQueueIndex 索引
+     */
+    public void setQueueIndex(int mQueueIndex) {
+        if (ListUtils.getInstance().isEmpty(mAudioBeanArrayList)) {
+            return;
+        }
+        this.mQueueIndex = mQueueIndex;
+        start();
+    }
+
+    /**
+     * 获取当前播放的索引
+     *
+     * @return 索引
+     */
+    public int getQueueIndex() {
+        return mQueueIndex;
+    }
+
+    /**
      * 点击进行是否收藏操作
      */
     public void isFavoriteMusic() {
@@ -154,13 +176,13 @@ public class AudioController {
              * 已经收藏的话移除收藏
              */
             MusicDapHelper.getInstance().removeFavoriteBean(getNowPlaying());
-            EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.CANCEL_FAVORITE, null));
+            EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.CANCEL_FAVORITE, new AudioBean()));
         } else {
             /*
              * 没有收藏的话进行收藏
              */
             MusicDapHelper.getInstance().addFavoriteMusic(getNowPlaying());
-            EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.FAVORITE, null));
+            EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.FAVORITE, new AudioBean()));
         }
 
     }
@@ -238,7 +260,7 @@ public class AudioController {
      * @param audioBean 数据
      */
     public void addAudioBean2ArrayList(int index, AudioBean audioBean) {
-        if (ListUtils.getInstance().isEmoty(mAudioBeanArrayList)) {
+        if (ListUtils.getInstance().isEmpty(mAudioBeanArrayList)) {
             Log.e("AudioController", "队列是空的");
             return;
         }
@@ -327,6 +349,7 @@ public class AudioController {
      */
     public void setPlayMode(PlayMode playMode) {
         mPlayMode = playMode;
+        EventBus.getDefault().post(new AudioEvent(AudioEvent.AudioEventStatus.PLAY_MODE, playMode));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -335,16 +358,6 @@ public class AudioController {
          * 播放完毕了
          */
         switch (event.getStatus()) {
-            case LOAD:
-                break;
-            case ERROR:
-                break;
-            case PAUSE:
-                break;
-            case START:
-                break;
-            case RELEASE:
-                break;
             case COMPLETE:
                 /*
                  * 下一首

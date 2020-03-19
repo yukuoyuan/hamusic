@@ -1,4 +1,4 @@
-package cn.yu.lib_common_ui.indicators;
+package cn.yu.lib_common_ui.views;
 
 import android.content.Context;
 

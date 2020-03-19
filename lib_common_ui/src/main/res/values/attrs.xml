@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MultiImageViewLayout">
+        <!--        横向的最大的个数-->
+        <attr name="rowMaxCount" format="integer" />
+        <!--        横向的间隙-->
+        <attr name="rowSpaceWidth" format="dimension" />
+        <!--        竖向的间隙-->
+        <attr name="columnSpaceWidth" format="dimension" />
+
+    </declare-styleable>
+    <declare-styleable name="SpreadView">
+        <!--        中心圆的颜色-->
+        <attr name="centerCircleColor" format="color" />
+        <!--        中心圆的半径-->
+        <attr name="centerCircleRadius" format="dimension" />
+        <!--扩散最大半径-->
+        <attr name="maxCircleRadius" format="dimension" />
+        <!--扩散延迟间隔-->
+        <attr name="spreadDelayTime" format="integer" />
+        <!--        扩散的距离-->
+        <attr name="spreadSpace" format="integer" />
+
+    </declare-styleable>
+
+</resources>

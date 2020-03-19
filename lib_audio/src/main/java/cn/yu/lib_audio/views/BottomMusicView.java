@@ -2,12 +2,16 @@ package cn.yu.lib_audio.views;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
+
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -17,6 +21,7 @@ import cn.yu.lib_audio.R;
 import cn.yu.lib_audio.bean.AudioBean;
 import cn.yu.lib_audio.events.AudioEvent;
 import cn.yu.lib_audio.mediaplayer.control.AudioController;
+import cn.yu.lib_base.config.Constants;
 import cn.yu.lib_imageloader.ImageLoadManger;
 
 
@@ -76,6 +81,7 @@ public class BottomMusicView extends ConstraintLayout implements View.OnClickLis
     private void initListener() {
         ivDiyViewBottomMusicViewList.setOnClickListener(this);
         ivDiyViewBottomMusicViewIsPlay.setOnClickListener(this);
+        setOnClickListener(this);
     }
 
     /**
@@ -260,6 +266,12 @@ public class BottomMusicView extends ConstraintLayout implements View.OnClickLis
              * 弹出播放列表
              */
 
+        } else {
+            /*
+             * 跳转详情界面
+             */
+            ARouter.getInstance().build(Constants.Router.MusicPlayerActivityPath).navigation();
+//            getContext().startActivity(new Intent(getContext(), MusicPlayerActivity.class));
         }
     }
 }

@@ -24,4 +24,7 @@ dependencies {
     implementation this.rootProject.depsLibs.appcompat
     // indicator 第三方指示器库
     api this.rootProject.depsLibs.magicindicator
+    //占位主工程的图片加载库
+    compileOnly project(':lib_imageloader')
+
 }

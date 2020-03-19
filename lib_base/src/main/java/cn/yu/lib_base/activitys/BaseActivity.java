@@ -1,8 +1,11 @@
 package cn.yu.lib_base.activitys;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.ButterKnife;
 import cn.yu.lib_base.utils.StatusBarUtil;
@@ -19,6 +22,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         /*
+         * 是否使用eventbus
+         */
+        if (isUsedEventBus()) {
+            EventBus.getDefault().register(this);
+        }
+        /*
          * 设置布局
          */
         setContentView(getLayout());
@@ -34,6 +43,26 @@ public abstract class BaseActivity extends AppCompatActivity {
          * 初始化数据
          */
         initData(getIntent().getExtras());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        /*
+         * 是否使用eventbus的反注册
+         */
+        if (isUsedEventBus()) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    /**
+     * 是否使用eventbus
+     *
+     * @return 默认不使用
+     */
+    protected boolean isUsedEventBus() {
+        return false;
     }
 
     /**

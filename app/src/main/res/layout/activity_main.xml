@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/dl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--   内容区-->
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white">
         <!--        标题区域-->
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_main_title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_45"
@@ -51,9 +51,9 @@
                 app:layout_constraintEnd_toStartOf="@id/iv_main_title_right"
                 app:layout_constraintStart_toEndOf="@id/iv_main_title_left"
                 app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_main"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_0"
@@ -63,9 +63,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <!--    侧滑区 -->
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
@@ -135,11 +135,9 @@
                             android:textSize="15sp" />
                     </LinearLayout>
                 </RelativeLayout>
-
-
             </LinearLayout>
         </ScrollView>
 
 
-    </android.support.constraint.ConstraintLayout>
-</android.support.v4.widget.DrawerLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -2,6 +2,8 @@ package cn.yu.hamusic;
 
 import android.app.Application;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+
 import cn.yu.lib_audio.AudioHelper;
 
 /**
@@ -18,5 +20,9 @@ public class HaMusicApplication extends Application {
          * 初始化音乐组件
          */
         AudioHelper.getInstance().setContext(this);
+        /*
+         * 初始化ARouter
+         */
+        ARouter.init(this);
     }
 }
